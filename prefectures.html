@@ -166,10 +166,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("legend").classList.toggle("show");
 
         function pickTarget() {
-            if (!romaji) {
-                document.getElementById("Romaji").classList.remove("show");
-            }
-            
+            document.getElementById("Romaji").classList.remove("show");
+
             updateCooldowns();
 
             const available = regions.filter(r => !cooldowns[r.id]);
@@ -184,6 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("Kanji").textContent = name;
 
             if (document.getElementById("Romaji").textContent == "") {
+                document.getElementById("Romaji").textContent = currentTarget.id;
+            }
+
+            if (romaji) {
+                document.getElementById("Romaji").classList.add("show");
                 document.getElementById("Romaji").textContent = currentTarget.id;
             }
 
