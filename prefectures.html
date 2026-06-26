@@ -166,7 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("legend").classList.toggle("show");
 
         function pickTarget() {
-            document.getElementById("Romaji").classList.remove("show");
+            if (!romaji) {
+                document.getElementById("Romaji").classList.remove("show");
+            }
             
             updateCooldowns();
 
