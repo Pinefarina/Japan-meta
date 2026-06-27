@@ -3,7 +3,7 @@
 <head> 
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
-    <title>Pefectures</title>
+    <title>Phone Codes Quiz</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
@@ -11,18 +11,8 @@
     <div id="mapWrapper">
         <div id="map"></div>
         
-        <div id="legend">
-            <div class="legend-item">
-                <span>R - toggle names</span>
-            </div>
-
-            <div class="legend-item">
-                <span>F - show name</span>
-            </div>
-        </div>
         <div id="question">
-            <div id="Romaji">name</div>
-            <div id="Kanji"></div>
+            <div id="code"></div>
         </div>
         <div id="legend_colors">
             <div class="legend-item">
@@ -45,8 +35,33 @@
 </div>
 
 <a id="homeButton" href="index.html">↩</a>
+<a id="backButton" href="phone-codes.html">Learning</a>
 
 <style>
+
+#backButton {
+    position: fixed;
+    top: 10px;
+    right: 70px;
+
+    width: 100px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgb(226, 248, 250);
+    color: black;
+    text-decoration: none;
+
+    border-radius: 6px;
+    font-size: 20px;
+
+    z-index: 9999;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
 path { 
     transition: fill 0.3s ease;
@@ -82,21 +97,7 @@ path {
     font-size: 12px;
 }
 
-#Romaji {
-    font-size: clamp(16px, 2.5vh, 64px);
-    opacity: 0;
-    transform: translateY(-6px);
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#Romaji.show {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto; 
-}
-
-#Kanji {
+#code {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,7 +129,7 @@ path {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("prefectures.svg")
+    fetch("phone_code_quiz.svg")
     .then(response => response.text())
     .then(svgText => {
 
@@ -140,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const regions = [...svg.querySelectorAll("path[id]")];
 
         if (!svg || regions.length === 0) {
-            document.getElementById("Kanji").textContent = "Shit's dead";
+            document.getElementById("code").textContent = "Shit's dead";
             return;
         }
 
@@ -154,7 +155,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         let guessing = false;
-        let romaji = false;
         let currentTarget = null;
 
         function updateCooldowns() {
@@ -164,14 +164,21 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        document.getElementById("legend").classList.toggle("show");
-
         function pickTarget() {
-            document.getElementById("Romaji").classList.remove("show");
-
             updateCooldowns();
 
-            const available = regions.filter(r => !cooldowns[r.id]);
+            const available = [];
+
+            regions.forEach(r => {
+                const hasCode = r.hasAttribute("code");
+
+                if (!hasCode) {r.style.pointerEvents = "none";} 
+
+                if (!cooldowns[r.id] && hasCode) {
+                    available.push(r);
+                }
+            });
+
             const pool = available.length ? available : regions;
 
             currentTarget = pool[Math.floor(Math.random() * pool.length)];
@@ -180,12 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const name = currentTarget.getAttribute("name") || currentTarget.id;
 
-            document.getElementById("Kanji").textContent = name;
-
-            if (romaji) {
-                document.getElementById("Romaji").classList.add("show");
-                document.getElementById("Romaji").textContent = currentTarget.id;
-            }
+            document.getElementById("code").textContent = "0" + name;
 
             guessing = true;
         }
@@ -200,8 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentTarget.style.fill = "#2ECC71";
             }
 
-            document.getElementById("Romaji").textContent = currentTarget.id;
-            document.getElementById("Romaji").classList.add("show");
             document.getElementById("legend_colors").classList.toggle("show");
             document.getElementById("continue").classList.toggle("show");
         }
@@ -236,26 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 resetAndContinue();
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "KeyR") {
-                if (romaji) {
-                    romaji = false;
-                }
-                else {
-                    romaji = true;
-                    document.getElementById("Romaji").textContent = currentTarget.id;
-                    document.getElementById("Romaji").classList.add("show");
-                }
-            }
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.code === "KeyF") {
-                document.getElementById("Romaji").textContent = currentTarget.id;
-                document.getElementById("Romaji").classList.add("show");
             }
         });
 

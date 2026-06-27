@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
     <title>Phone Codes</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <div id="page">
@@ -26,8 +27,33 @@
 </div> 
 
 <a id="homeButton" href="index.html">↩</a>
+<a id="backButton" href="phone-codes-quiz.html">Quiz</a>
 
 <style>
+
+#backButton {
+    position: fixed;
+    top: 10px;
+    right: 70px;
+
+    width: 100px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgb(226, 248, 250);
+    color: black;
+    text-decoration: none;
+
+    border-radius: 6px;
+    font-size: 20px;
+
+    z-index: 9999;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
 
 path { 
     transition: fill 0.3s ease;
@@ -107,13 +133,13 @@ path {
 .label {
     position: absolute;
     transform: translate(-50%, -50%);
-    font-size: 10px;
+    font-size: 16px;
     color: black;
     white-space: nowrap;
 }
 
 .label.small {
-    font-size: 8px;
+    font-size: 12px;
 }
 
 .labelhide {
@@ -178,19 +204,19 @@ document.addEventListener("DOMContentLoaded", () => {
         let zoomed = false;
 
         const specialColors = {
-            3: "hsl(100 23% 83%)",
-            4: "hsl(120 23% 20%)",
+            3: "hsl(180 23% 40%)",
+            4: "hsl(210 23% 20%)",
             6: "hsl(240 23% 20%)",
         };
 
         const hues = {
-            1: "0",
-            2: "30",
-            4: "120",
-            5: "150",
-            7: "210",
-            8: "240",
-            9: "270"
+            1: "150",
+            2: "180",
+            4: "210",
+            5: "240",
+            7: "270",
+            8: "300",
+            9: "330"
         };
 
         function colorNormal() {
@@ -304,14 +330,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const MAX_ZOOM = 50;
 
         function toggleLabels(scale) {
-            if (scale > 2.5 && !zoomed) {
+            if (scale > 4 && !zoomed) {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorZoomed();
                 saveFill();
                 zoomed = true;
             }
-            if (scale < 2.5 && zoomed) {
+            if (scale < 4 && zoomed) {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorNormal();
