@@ -39,6 +39,7 @@ body {
     border: 1px solid #ccc;
     min-height: 0;
     position: relative;
+    overflow: hidden;
 }
 
 #menu {

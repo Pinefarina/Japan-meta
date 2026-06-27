@@ -20,7 +20,7 @@
             </div>
         </div>
         <div id="question">
-            <div id="Romaji"></div>
+            <div id="Romaji">name</div>
             <div id="Kanji"></div>
         </div>
         <div id="legend_colors">
@@ -181,10 +181,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             document.getElementById("Kanji").textContent = name;
 
-            if (document.getElementById("Romaji").textContent == "") {
-                document.getElementById("Romaji").textContent = currentTarget.id;
-            }
-
             if (romaji) {
                 document.getElementById("Romaji").classList.add("show");
                 document.getElementById("Romaji").textContent = currentTarget.id;
@@ -277,11 +273,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const baseWidth = viewBox.width;
         const baseHeight = viewBox.height;
-
-        const zoomSwitchAt = 2.5;
         
         const MIN_ZOOM = 0.5;
-        const MAX_ZOOM = 15;
+        const MAX_ZOOM = 35;
 
         let isPanning = false;
         let startMouse = {x: 0, y: 0};

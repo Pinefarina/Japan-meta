@@ -495,12 +495,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const baseWidth = viewBox.width;
         const baseHeight = viewBox.height;
-
-        const MIN_ZOOM = 0.1;
-        const MAX_ZOOM = 15;
+        
+        const MIN_ZOOM = 0.5;
+        const MAX_ZOOM = 35;
 
         let isPanning = false;
-        let start = { x: 0, y: 0 };
+        let startMouse = {x: 0, y: 0};
+        let startViewBox = {x: 0, y: 0};
 
         function updateViewBox() {
             svg.setAttribute(
@@ -509,11 +510,48 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         }
 
-        svg.addEventListener("mousedown", (e) => {
+        function getSvgMousePosition(e) {
+
+            const rect = svg.getBoundingClientRect();
+            const viewAspect = viewBox.width / viewBox.height;
+            const rectAspect = rect.width / rect.height;
+
+            let renderedWidth = rect.width;
+            let renderedHeight = rect.height;
+
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (rectAspect > viewAspect) {
+                renderedWidth = rect.height * viewAspect;
+                offsetX = (rect.width - renderedWidth) / 2;
+            } 
+            else {
+                renderedHeight = rect.width / viewAspect;
+                offsetY = (rect.height - renderedHeight) / 2;
+            }
+
+            return {
+                x: (e.clientX - rect.left - offsetX) / renderedWidth,
+                y: (e.clientY - rect.top - offsetY) / renderedHeight
+            };
+
+        }
+
+        svg.addEventListener("mousedown", e => {
             isPanning = true;
-            start.x = e.clientX;
-            start.y = e.clientY;
+
+            const mouse = getSvgMousePosition(e);
+
+            startMouse.x = mouse.x;
+            startMouse.y = mouse.y;
+
+            startViewBox.x = viewBox.x;
+            startViewBox.y = viewBox.y;
+
             svg.style.cursor = "grabbing";
+
+            e.preventDefault();
         });
 
         window.addEventListener("mouseup", () => {
@@ -521,31 +559,26 @@ document.addEventListener("DOMContentLoaded", () => {
             svg.style.cursor = "grab";
         });
 
-        window.addEventListener("mousemove", (e) => {
+        window.addEventListener("mousemove", e => {
             if (!isPanning) return;
 
-            const dx = (e.clientX - start.x) * (viewBox.width / svg.clientWidth);
-            const dy = (e.clientY - start.y) * (viewBox.height / svg.clientHeight);
+            const mouse = getSvgMousePosition(e);
 
-            viewBox.x -= dx;
-            viewBox.y -= dy;
+            const dx = (mouse.x - startMouse.x) * viewBox.width;
+            const dy = (mouse.y - startMouse.y) * viewBox.height;
 
-            start.x = e.clientX;
-            start.y = e.clientY;
+            viewBox.x = startViewBox.x - dx;
+
+            viewBox.y = startViewBox.y - dy;
 
             updateViewBox();
         });
 
-        svg.addEventListener("wheel", (e) => {
+        svg.addEventListener("wheel", e => {
             e.preventDefault();
 
             const zoomFactor = 1.1;
-
-            const rect = svg.getBoundingClientRect();
-
-            const mouseX = (e.clientX - rect.left) / rect.width;
-            const mouseY = (e.clientY - rect.top) / rect.height;
-
+            const mouse = getSvgMousePosition(e);
             const scale = baseWidth / viewBox.width;
 
             let newScale = scale * (e.deltaY < 0 ? zoomFactor : 1 / zoomFactor);
@@ -555,19 +588,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const newWidth = baseWidth / newScale;
             const newHeight = baseHeight / newScale;
 
-            if (
-                (newScale === MIN_ZOOM && e.deltaY > 0) ||
-                (newScale === MAX_ZOOM && e.deltaY < 0)
-            ) return;
-
-            viewBox.x += (viewBox.width - newWidth) * mouseX;
-            viewBox.y += (viewBox.height - newHeight) * mouseY;
+            viewBox.x += (viewBox.width - newWidth) * mouse.x;
+            viewBox.y += (viewBox.height - newHeight) * mouse.y;
 
             viewBox.width = newWidth;
             viewBox.height = newHeight;
 
             updateViewBox();
-        }, { passive: false });
+        }, { passive:false });
 
         loadQuestion();
     });

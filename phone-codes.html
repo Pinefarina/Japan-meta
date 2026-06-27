@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Phone Codes</title>
+</head>
+<body>
+<div id="page">
+    <div id="mapWrapper">
+        
+        <div id="map"></div>
+        <div id="labelLayer">
+            <div id="labelsNormal"></div>
+            <div id="labelsSmall"></div>
+        </div>
+
+        <div id="legend">
+            <div id="question">
+                <div id="Romaji"></div>
+                <div id="Kanji"></div>
+                <div id="PhoneCode"></div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<a id="homeButton" href="index.html">↩</a>
+
+<style>
+
+path { 
+    transition: fill 0.3s ease;
+    cursor: crosshair;
+}
+
+#question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    line-height: 1.1;
+}
+
+#Romaji {
+    font-size: clamp(18px, 2vw, 28px);
+}
+
+#Kanji {
+    width: 6em;
+    text-align: center;
+    font-size: clamp(32px, 4vw, 72px);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+#PhoneCode {
+    font-size: clamp(16px, 1.5vw, 24px);
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#map svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+#status {
+    justify-self: end;
+    align-self: center;
+    font-size: 36px;
+    color: #9e9e9e;
+    transition: color 0.25s ease, background-color 0.25s ease;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+#status.glow {
+    background-color: #ff4d4d;
+    color: #000000;
+}
+
+#labelLayer {
+    position: absolute;
+    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#labelsNormal,
+#labelsSmall {
+    position: absolute;
+    inset: 0;
+}
+
+.label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    color: black;
+    white-space: nowrap;
+}
+
+.label.small {
+    font-size: 8px;
+}
+
+.labelhide {
+    display: none;
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    fetch("phone_codes.svg")
+    .then(response => response.text())
+    .then(svgText => {
+
+        const map = document.getElementById("map");
+        map.innerHTML = svgText;
+
+        const svg = map.querySelector("svg");
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+        const regions = [...svg.querySelectorAll("path[id]")];
+
+        const labelLayer = document.getElementById("labelLayer");
+        const labelsNormalContainer = document.getElementById("labelsNormal");
+        const labelsSmallContainer = document.getElementById("labelsSmall");
+
+        const normalLabels = [];
+        const smallLabels = [];
+
+        const labels = [...svg.querySelectorAll(".map-label, .map-label-small")];
+
+        const labelData = labels.map(el => {
+            return {
+                text: el.textContent,
+                x: +el.getAttribute("x"),
+                y: +el.getAttribute("y"),
+                type: el.classList.contains("map-label-small") ? "small" : "normal"
+            };
+        });
+
+        labels.forEach(l => l.remove());
+
+        for (const l of labelData) {
+            const div = document.createElement("div");
+
+            div.textContent = l.text;
+            div.className = "label";
+
+            if (l.type === "small") {
+                div.classList.add("small");
+                labelsSmallContainer.appendChild(div);
+                smallLabels.push({ el: div, ...l });
+            } else {
+                div.classList.add("normal");
+                labelsNormalContainer.appendChild(div);
+                normalLabels.push({ el: div, ...l });
+            }
+        }
+
+        document.getElementById("labelsSmall").classList.toggle("labelhide");
+        let zoomed = false;
+
+        const specialColors = {
+            3: "hsl(100 23% 83%)",
+            4: "hsl(120 23% 20%)",
+            6: "hsl(240 23% 20%)",
+        };
+
+        const hues = {
+            1: "0",
+            2: "30",
+            4: "120",
+            5: "150",
+            7: "210",
+            8: "240",
+            9: "270"
+        };
+
+        function colorNormal() {
+            regions.forEach(region => {
+
+                const label = region.getAttribute("inkscape:label");
+                if (!label) return;
+
+                const id = Number(label);
+
+                if (specialColors[id]) {
+                    region.style.fill = specialColors[id];
+                    region.style.stroke = specialColors[id];
+                    return;
+                }
+
+                const normalized = String(id).padEnd(3, "0");
+                const hue = hues[Number(normalized[0])];
+                const shade = Number(normalized.slice(1, 2))*10;
+
+                const lightness = 20 + shade * (40 / 60);
+
+                region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.stroke = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.strokeWidth = "5";
+            });
+        }
+
+        function colorZoomed() {
+            regions.forEach(region => {
+
+                const label = region.getAttribute("inkscape:label");
+                if (!label) return;
+
+                const id = Number(label);
+
+                if (specialColors[id]) {
+                    region.style.fill = specialColors[id];
+                    region.style.stroke = "#000000";
+                    return;
+                }
+
+                const normalized = String(id).padEnd(3, "0");
+                const hue = hues[Number(normalized[0])];
+                const shade = Number(normalized.slice(1, 3));
+
+                const lightness = 20 + shade * (60 / 99);
+
+                region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.stroke = "#000000";
+                region.style.strokeWidth = "1";
+            });
+        }
+
+        function saveFill() {
+            regions.forEach(region => {
+                region.dataset.originalFill =
+                    region.getAttribute("fill") ||
+                    getComputedStyle(region).fill;
+            });
+        }
+
+        function mark(region) {
+
+            region.style.fill = "#FFFFFF";
+
+            document.getElementById("legend").classList.add("show");
+
+            document.getElementById("Kanji").textContent =
+                region.querySelector("title")?.textContent || "";
+
+            document.getElementById("Romaji").textContent =
+                region.id.replace(/[0-9]/g, "");
+
+            document.getElementById("PhoneCode").textContent =
+                "0" + region.getAttribute("inkscape:label");
+        }
+
+        function unmark() {
+
+            regions.forEach(r => {
+                r.style.fill = r.dataset.originalFill;
+            });
+
+            document.getElementById("legend").classList.remove("show");
+
+            document.getElementById("Kanji").textContent = "";
+            document.getElementById("Romaji").textContent = "";
+            document.getElementById("PhoneCode").textContent = "";
+        }
+
+        regions.forEach(region => {
+            region.addEventListener("click", e => {
+                e.stopPropagation();
+
+                if (region.style.fill === "rgb(255, 255, 255)") {
+                    unmark();
+                } else {
+                    unmark();
+                    mark(region);
+                }
+            });
+        });
+
+        let viewBox = svg.viewBox.baseVal;
+
+        const baseWidth = viewBox.width;
+        const baseHeight = viewBox.height;
+
+        const MIN_ZOOM = 0.5;
+        const MAX_ZOOM = 50;
+
+        function toggleLabels(scale) {
+            if (scale > 2.5 && !zoomed) {
+                document.getElementById("labelsSmall").classList.toggle("labelhide");
+                document.getElementById("labelsNormal").classList.toggle("labelhide");
+                colorZoomed();
+                saveFill();
+                zoomed = true;
+            }
+            if (scale < 2.5 && zoomed) {
+                document.getElementById("labelsSmall").classList.toggle("labelhide");
+                document.getElementById("labelsNormal").classList.toggle("labelhide");
+                colorNormal();
+                saveFill();
+                zoomed = false;
+            }
+        }
+
+        const camera = {
+            x: viewBox.x,
+            y: viewBox.y,
+            width: viewBox.width,
+            height: viewBox.height
+        };
+
+        const target = { ...camera };
+
+        function lerp(a, b, t) {
+            return a + (b - a) * t;
+        }
+
+        function applyViewBox() {
+            svg.setAttribute(
+                "viewBox",
+                `${camera.x} ${camera.y} ${camera.width} ${camera.height}`
+            );
+        }
+
+        function animate() {
+            const smoothness = 0.3;
+
+            camera.x = lerp(camera.x, target.x, smoothness);
+            camera.y = lerp(camera.y, target.y, smoothness);
+            camera.width = lerp(camera.width, target.width, smoothness);
+            camera.height = lerp(camera.height, target.height, smoothness);
+
+            applyViewBox();
+            requestAnimationFrame(animate);
+            updateLabelPositions();
+        }
+
+        
+
+        function getSvgMousePosition(e) {
+
+            const rect = svg.getBoundingClientRect();
+            const viewAspect = viewBox.width / viewBox.height;
+            const rectAspect = rect.width / rect.height;
+
+            let renderedWidth = rect.width;
+            let renderedHeight = rect.height;
+
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (rectAspect > viewAspect) {
+                renderedWidth = rect.height * viewAspect;
+                offsetX = (rect.width - renderedWidth) / 2;
+            } else {
+                renderedHeight = rect.width / viewAspect;
+                offsetY = (rect.height - renderedHeight) / 2;
+            }
+
+            return {
+                x: (e.clientX - rect.left - offsetX) / renderedWidth,
+                y: (e.clientY - rect.top - offsetY) / renderedHeight
+            };
+        }
+
+        let isPanning = false;
+        let startMouse = { x: 0, y: 0 };
+        let startViewBox = { x: 0, y: 0 };
+
+        function updateLabelPositions() {
+
+            const rect = svg.getBoundingClientRect();
+
+            const viewAspect = camera.width / camera.height;
+            const rectAspect = rect.width / rect.height;
+
+            let renderedWidth = rect.width;
+            let renderedHeight = rect.height;
+
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (rectAspect > viewAspect) {
+                renderedWidth = rect.height * viewAspect;
+                offsetX = (rect.width - renderedWidth) / 2;
+            } else {
+                renderedHeight = rect.width / viewAspect;
+                offsetY = (rect.height - renderedHeight) / 2;
+            }
+
+            const scaleX = renderedWidth / camera.width;
+            const scaleY = renderedHeight / camera.height;
+
+            updateGroup(normalLabels, scaleX, scaleY, offsetX, offsetY);
+            updateGroup(smallLabels, scaleX, scaleY, offsetX, offsetY);
+        }
+
+        function updateGroup(list, scaleX, scaleY, offsetX, offsetY) {
+            for (const l of list) {
+                const x = (l.x - camera.x) * scaleX + offsetX;
+                const y = (l.y - camera.y) * scaleY + offsetY;
+
+                l.el.style.transform =
+                    `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+            }
+        }
+
+        svg.addEventListener("mousedown", e => {
+            isPanning = true;
+
+            const mouse = getSvgMousePosition(e);
+
+            startMouse.x = mouse.x;
+            startMouse.y = mouse.y;
+
+            startViewBox.x = target.x;
+            startViewBox.y = target.y;
+
+            svg.style.cursor = "grabbing";
+            e.preventDefault();
+        });
+
+        window.addEventListener("mouseup", () => {
+            isPanning = false;
+            svg.style.cursor = "grab";
+        });
+
+        window.addEventListener("mousemove", e => {
+            if (!isPanning) return;
+
+            const mouse = getSvgMousePosition(e);
+
+            const dx = (mouse.x - startMouse.x) * target.width;
+            const dy = (mouse.y - startMouse.y) * target.height;
+
+            target.x = startViewBox.x - dx;
+            target.y = startViewBox.y - dy;
+        });
+
+        svg.addEventListener("wheel", e => {
+            e.preventDefault();
+
+            const zoomFactor = 1.1;
+            const mouse = getSvgMousePosition(e);
+
+            const scale = baseWidth / target.width;
+
+            let newScale = scale * (e.deltaY < 0 ? zoomFactor : 1 / zoomFactor);
+            newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
+
+            const newWidth = baseWidth / newScale;
+            const newHeight = baseHeight / newScale;
+
+            target.x = mouse.x * (target.width - newWidth) + target.x;
+            target.y = mouse.y * (target.height - newHeight) + target.y;
+
+            target.width = newWidth;
+            target.height = newHeight;
+
+            toggleLabels(newScale);
+
+        }, { passive: false });
+
+        colorNormal();
+        saveFill()
+        animate();
+
+    });
+
+});
+</script>
+
+
+</body>
+</html>
