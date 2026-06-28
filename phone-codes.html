@@ -70,6 +70,7 @@ path {
 
 #Romaji {
     font-size: clamp(18px, 2vw, 28px);
+    pointer-events: none;
 }
 
 #Kanji {
@@ -78,10 +79,12 @@ path {
     font-size: clamp(32px, 4vw, 72px);
     white-space: nowrap;
     line-height: 1;
+    pointer-events: none;
 }
 
 #PhoneCode {
     font-size: clamp(16px, 1.5vw, 24px);
+    pointer-events: none;
 }
 
 #map {
@@ -122,6 +125,7 @@ path {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    user-select: none;
 }
 
 #labelsNormal,
@@ -224,6 +228,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const label = region.getAttribute("inkscape:label");
                 if (!label) return;
+                if (region.style.fill === "rgb(255, 255, 254)") return;
+
+                const id = Number(label);
+
+                if (specialColors[id]) {
+                    region.style.fill = specialColors[id];
+                    region.style.stroke = specialColors[id];
+                    return;
+                }
+
+                const normalized = String(id).padEnd(3, "0");
+                const hue = hues[Number(normalized[0])];
+                const shade = Number(normalized.slice(1, 2))*10;
+
+                const lightness = 20 + shade * (40 / 60);
+
+                region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.stroke = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.strokeWidth = "5";
+            });
+        }
+
+        function colorAllNormal() {
+            regions.forEach(region => {
+
+                const label = region.getAttribute("inkscape:label");
+                if (!label) return;
 
                 const id = Number(label);
 
@@ -250,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const label = region.getAttribute("inkscape:label");
                 if (!label) return;
+                if (region.style.fill === "rgb(255, 255, 254)") return;
 
                 const id = Number(label);
 
@@ -271,17 +303,50 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        function saveFill() {
+        function colorAllZoomed() {
+            regions.forEach(region => {
+
+                const label = region.getAttribute("inkscape:label");
+                if (!label) return;
+
+                const id = Number(label);
+
+                if (specialColors[id]) {
+                    region.style.fill = specialColors[id];
+                    region.style.stroke = "#000000";
+                    return;
+                }
+
+                const normalized = String(id).padEnd(3, "0");
+                const hue = hues[Number(normalized[0])];
+                const shade = Number(normalized.slice(1, 3));
+
+                const lightness = 20 + shade * (60 / 99);
+
+                region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
+                region.style.stroke = "#000000";
+                region.style.strokeWidth = "1";
+            });
+        }
+
+/*         function saveFill() {
             regions.forEach(region => {
                 region.dataset.originalFill =
                     region.getAttribute("fill") ||
                     getComputedStyle(region).fill;
             });
-        }
+        } */
 
         function mark(region) {
 
-            region.style.fill = "#FFFFFF";
+            if (zoomed) {
+                colorAllZoomed();
+            }
+            else {
+                colorAllNormal();
+            }
+
+            region.style.fill = "rgb(255, 255, 254)";
 
             document.getElementById("legend").classList.add("show");
 
@@ -295,11 +360,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 "0" + region.getAttribute("inkscape:label");
         }
 
-        function unmark() {
+        function unmark(region) {
 
-            regions.forEach(r => {
-                r.style.fill = r.dataset.originalFill;
-            });
+            region.style.fill = "rgb(100, 100, 100)";
+
+            if (zoomed) {
+                colorZoomed();
+            }
+            else {
+                colorNormal();
+            }
 
             document.getElementById("legend").classList.remove("show");
 
@@ -312,10 +382,10 @@ document.addEventListener("DOMContentLoaded", () => {
             region.addEventListener("click", e => {
                 e.stopPropagation();
 
-                if (region.style.fill === "rgb(255, 255, 255)") {
-                    unmark();
+                if (region.style.fill === "rgb(255, 255, 254)") {
+                    unmark(region);
                 } else {
-                    unmark();
+                    unmark(region);
                     mark(region);
                 }
             });
@@ -334,14 +404,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorZoomed();
-                saveFill();
+                /* saveFill(); */
                 zoomed = true;
             }
             if (scale < 4 && zoomed) {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorNormal();
-                saveFill();
+                /* saveFill(); */
                 zoomed = false;
             }
         }
@@ -506,7 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: false });
 
         colorNormal();
-        saveFill()
+        /* saveFill() */
         animate();
 
     });
