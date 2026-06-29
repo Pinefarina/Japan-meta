@@ -7,61 +7,33 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
-<div id="page">
-    <div id="mapWrapper">
-        <div id="map"></div>
-        
-        <div id="question">
-            <div id="code"></div>
-        </div>
-        <div id="legend_colors">
-            <div class="legend-item">
-                <span class="color-box correct"></span>
-                <span>Correct</span>
-            </div>
+<div id="mapContainer">
+    <div id="map"></div>
+    
+    <div id="question" class="background"></div>
 
-            <div class="legend-item">
-                <span class="color-box wrong"></span>
-                <span>Wrong</span>
-            </div>
+    <div id="legendBox" class="background">
+        <div class="legendItem">
+            <span class="colorBox correct"></span>
+            <span>Correct</span>
         </div>
-        <button id="continue" onclick="buttonContinue()">
-            Continue
-            <div id="notice">
-                spacebar
-            </div>
-        </button>
+
+        <div class="legendItem">
+            <span class="colorBox wrong"></span>
+            <span>Wrong</span>
+        </div>
     </div>
+    <button id="continueButton" class="background" onclick="buttonContinue()">
+        Continue
+        <div id="continueButtonNotice">
+            spacebar
+        </div>
+    </button>
+    <a id="homeButton" class="background" href="index.html">↩</a>
+    <a id="switchButton" class="background" href="phone-codes.html">Learning</a>
 </div>
 
-<a id="homeButton" href="index.html">↩</a>
-<a id="backButton" href="phone-codes.html">Learning</a>
-
 <style>
-
-#backButton {
-    position: fixed;
-    top: 10px;
-    right: 70px;
-
-    width: 100px;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgb(226, 248, 250);
-    color: black;
-    text-decoration: none;
-
-    border-radius: 6px;
-    font-size: 20px;
-
-    z-index: 9999;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
 
 path { 
     transition: fill 0.3s ease;
@@ -69,41 +41,16 @@ path {
 }
 
 #question {
-    margin: 0;
-    line-height: 1;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 0;
+    text-align: center;
     pointer-events: none;
     
     position: absolute;
-    top: 10px;
+    top: 0.625rem;
     left: 50%;
     transform: translate(-50%, 0);
 
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-
-    padding: 8px;
-    border-radius: 6px;
-
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(4px);
-
-    font-size: 12px;
-}
-
-#code {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: clamp(30px, 20vh, 350px);
-    font-size: clamp(24px, 5vh, 160px);
-    white-space: nowrap;
+    width: 15.5rem;
+    font-size: 4rem;
 }
 
 #map {
@@ -113,15 +60,11 @@ path {
     cursor: grab;
 }
 
-#continue {
+#continueButton {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-0.375rem);
     transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#continue.show { 
-    opacity: 1;
-    transform: translateY(6px);
+    pointer-events: none;
 }
 
 </style>
@@ -141,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const regions = [...svg.querySelectorAll("path[id]")];
 
         if (!svg || regions.length === 0) {
-            document.getElementById("code").textContent = "Shit's dead";
+            document.getElementById("question").textContent = "Shit's dead";
             return;
         }
 
@@ -187,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const name = currentTarget.getAttribute("name") || currentTarget.id;
 
-            document.getElementById("code").textContent = "0" + name;
+            document.getElementById("question").textContent = "0" + name;
 
             guessing = true;
         }
@@ -202,8 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 currentTarget.style.fill = "#2ECC71";
             }
 
-            document.getElementById("legend_colors").classList.toggle("show");
-            document.getElementById("continue").classList.toggle("show");
+            document.getElementById("legendBox").classList.add("show");
+            document.getElementById("continueButton").classList.add("show");
         }
 
         function resetAndContinue() {
@@ -213,8 +156,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 r.style.fill = r.dataset.originalFill;
             });
 
-            document.getElementById("legend_colors").classList.toggle("show");
-            document.getElementById("continue").classList.toggle("show");
+            document.getElementById("legendBox").classList.remove("show");
+            document.getElementById("continueButton").classList.remove("show");
 
             pickTarget();
         }

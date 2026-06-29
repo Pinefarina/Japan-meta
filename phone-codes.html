@@ -7,114 +7,49 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
-<div id="page">
-    <div id="mapWrapper">
-        
-        <div id="map"></div>
-        <div id="labelLayer">
-            <div id="labelsNormal"></div>
-            <div id="labelsSmall"></div>
-        </div>
-
-        <div id="legend">
-            <div id="question">
-                <div id="Romaji"></div>
-                <div id="Kanji"></div>
-                <div id="PhoneCode"></div>
-            </div>
-        </div>
+<div id="mapContainer">
+    
+    <div id="map"></div>
+    <div id="labelLayer">
+        <div id="labelsNormal"></div>
+        <div id="labelsSmall"></div>
     </div>
-</div> 
 
-<a id="homeButton" href="index.html">↩</a>
-<a id="backButton" href="phone-codes-quiz.html">Quiz</a>
+    <div id="upperLeftBox" class="background">
+        <div id="Romaji"></div>
+        <div id="Kanji"></div>
+        <div id="PhoneCode"></div>
+    </div>
+    <a id="homeButton" class="background" href="index.html">↩</a>
+    <a id="switchButton" class="background" href="phone-codes-quiz.html">Quiz - normal</a>
+    <a id="expertButton" class="background" href="phone-codes-quiz-expert.html">Quiz - expert</a>
+</div>
 
 <style>
 
-#backButton {
-    position: fixed;
-    top: 10px;
-    right: 70px;
-
-    width: 100px;
-    height: 50px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: rgb(226, 248, 250);
-    color: black;
-    text-decoration: none;
-
-    border-radius: 6px;
-    font-size: 20px;
-
-    z-index: 9999;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-}
-
-path { 
-    transition: fill 0.3s ease;
-    cursor: crosshair;
-}
-
-#question {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    line-height: 1.1;
+#upperLeftBox {
+    opacity: 0;
+    transform: translateY(-0.375rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 #Romaji {
-    font-size: clamp(18px, 2vw, 28px);
+    font-size: 1.75rem;
     pointer-events: none;
 }
 
 #Kanji {
-    width: 6em;
+    min-width: 5em;
     text-align: center;
-    font-size: clamp(32px, 4vw, 72px);
+    font-size: 4.5rem;
     white-space: nowrap;
     line-height: 1;
     pointer-events: none;
 }
 
 #PhoneCode {
-    font-size: clamp(16px, 1.5vw, 24px);
+    font-size: 1.5rem;
     pointer-events: none;
-}
-
-#map {
-    width: 100%;
-    height: 100%;
-}
-
-#map svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-#status {
-    justify-self: end;
-    align-self: center;
-    font-size: 36px;
-    color: #9e9e9e;
-    transition: color 0.25s ease, background-color 0.25s ease;
-    border-radius: 8px;
-    padding: 5px;
-}
-
-#status.glow {
-    background-color: #ff4d4d;
-    color: #000000;
 }
 
 #labelLayer {
@@ -137,13 +72,13 @@ path {
 .label {
     position: absolute;
     transform: translate(-50%, -50%);
-    font-size: 16px;
+    font-size: 1rem;
     color: black;
     white-space: nowrap;
 }
 
 .label.small {
-    font-size: 12px;
+    font-size: 0.75rem;
 }
 
 .labelhide {
@@ -235,6 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (specialColors[id]) {
                     region.style.fill = specialColors[id];
                     region.style.stroke = specialColors[id];
+                    region.style.strokeWidth = "5";
                     return;
                 }
 
@@ -261,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (specialColors[id]) {
                     region.style.fill = specialColors[id];
                     region.style.stroke = specialColors[id];
+                    region.style.strokeWidth = "5";
                     return;
                 }
 
@@ -288,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (specialColors[id]) {
                     region.style.fill = specialColors[id];
                     region.style.stroke = "#000000";
+                    region.style.strokeWidth = "1";
                     return;
                 }
 
@@ -314,6 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (specialColors[id]) {
                     region.style.fill = specialColors[id];
                     region.style.stroke = "#000000";
+                    region.style.strokeWidth = "1";
                     return;
                 }
 
@@ -329,53 +268,27 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-/*         function saveFill() {
-            regions.forEach(region => {
-                region.dataset.originalFill =
-                    region.getAttribute("fill") ||
-                    getComputedStyle(region).fill;
-            });
-        } */
-
         function mark(region) {
 
-            if (zoomed) {
-                colorAllZoomed();
-            }
-            else {
-                colorAllNormal();
-            }
+            if (zoomed) { colorAllZoomed(); }
+            else { colorAllNormal(); }
 
             region.style.fill = "rgb(255, 255, 254)";
 
-            document.getElementById("legend").classList.add("show");
+            document.getElementById("upperLeftBox").classList.add("show");
 
-            document.getElementById("Kanji").textContent =
-                region.querySelector("title")?.textContent || "";
-
-            document.getElementById("Romaji").textContent =
-                region.id.replace(/[0-9]/g, "");
-
-            document.getElementById("PhoneCode").textContent =
-                "0" + region.getAttribute("inkscape:label");
+            document.getElementById("Kanji").textContent = region.querySelector("title")?.textContent || "";
+            document.getElementById("Romaji").textContent = region.id.replace(/[0-9]/g, "");
+            document.getElementById("PhoneCode").textContent = "0" + region.getAttribute("inkscape:label");
         }
 
         function unmark(region) {
-
             region.style.fill = "rgb(100, 100, 100)";
 
-            if (zoomed) {
-                colorZoomed();
-            }
-            else {
-                colorNormal();
-            }
+            if (zoomed) { colorZoomed(); }
+            else { colorNormal(); }
 
-            document.getElementById("legend").classList.remove("show");
-
-            document.getElementById("Kanji").textContent = "";
-            document.getElementById("Romaji").textContent = "";
-            document.getElementById("PhoneCode").textContent = "";
+            document.getElementById("upperLeftBox").classList.remove("show");
         }
 
         regions.forEach(region => {
@@ -404,14 +317,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorZoomed();
-                /* saveFill(); */
                 zoomed = true;
             }
             if (scale < 4 && zoomed) {
                 document.getElementById("labelsSmall").classList.toggle("labelhide");
                 document.getElementById("labelsNormal").classList.toggle("labelhide");
                 colorNormal();
-                /* saveFill(); */
                 zoomed = false;
             }
         }

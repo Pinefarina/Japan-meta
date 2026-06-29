@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Phone Code Quiz</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div id="mapContainer">
+    <div id="upperLeftBox">
+        <div id="question" class="background">number</div>
+        <div id="selected" class="selectedAnswer background"></div>
+        <div id="selectedKanji" class="selectedAnswer background"></div>
+    </div>
+    <div id="map"></div>
+    <div id="answers">
+        <div id="municipalities" class="answers background"></div>
+        <div id="municipalitiesKanji" class="answers background"></div>
+    </div>
+    <div id="legendBox" class="background">
+        <div class="legendItem">
+            <span class="colorBox correct"></span>
+            <span>Correct Answer</span>
+        </div>
+
+        <div class="legendItem">
+            <span class="colorBox wrong"></span>
+            <span>Wrong Answer</span>
+        </div>
+
+        <div class="legendItem">
+            <span class="colorBox missing"></span>
+            <span>Missing Answer</span>
+        </div>
+    </div>
+    <button id="continueButton" class="background" onclick="buttonPress()">
+        Continue
+        <div id="continueButtonNotice">
+            spacebar
+        </div>
+    </button>
+    <a id="homeButton" class="background" href="index.html">↩</a>
+    <a id="switchButton" class="background" href="phone-codes.html">Learning</a>
+</div>
+
+<style>
+
+#answers {
+    position: absolute;
+    max-width: 33vw;
+    top: 0.625rem;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    pointer-events: none;
+    font-size: 1rem;
+    text-align: center;
+    transform: translate(-50%, 0);
+}
+
+.answers {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.5rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+
+    font-size: 1.25rem;
+}
+
+#question {
+    display: flex;
+    flex-direction: column;
+
+    width: 5rem;
+    font-size: 1.5rem;
+}
+
+.selectedAnswer {
+    opacity: 0;
+    transform: translateY(-0.375rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    fetch("phone_codes_expert.svg")
+    .then(response => response.text())
+    .then(svgText => {
+
+        const map = document.getElementById("map");
+        map.innerHTML = svgText;
+
+        const svg = map.querySelector("svg");
+        svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+        const regions = [...svg.querySelectorAll("path[id]")];
+        
+        const marked = new Set();
+        let questions;
+        let COOLDOWN_TURNS = 0;
+        const cooldowns = {};
+
+        let guessing = false;
+        let currentTarget = null;
+        
+        async function loadQuestions() {
+            const response = await fetch("phone_codes.json");
+            const data = await response.json();
+
+            questions = Object.entries(data).map(([id, correct]) => ({
+                id,
+                correct
+            }));
+
+            main();
+            loadQuestion();
+        }
+
+        function main() {
+            if (!svg || !regions.length || !questions.length) {
+                console.log = ("Shit's dead");
+                return;
+            }
+
+            COOLDOWN_TURNS = Math.round(questions.length / 2);
+
+            regions.forEach(r => {
+                r.dataset.originalFill =
+                    r.getAttribute("fill") ||
+                    getComputedStyle(r).fill;
+            });
+        }
+
+        function updateCooldowns() {
+            for (const id in cooldowns) {
+                cooldowns[id]--;
+                if (cooldowns[id] <= 0) delete cooldowns[id];
+            }
+        }
+
+        function loadQuestion() {
+            
+            updateCooldowns();
+
+            const available = questions.filter(r => !cooldowns[r.id]);
+            const pool = available.length ? available : questions;
+
+            currentTarget = pool[Math.floor(Math.random() * pool.length)];
+
+            cooldowns[currentTarget.id] = COOLDOWN_TURNS;
+
+            const name = currentTarget.name ||currentTarget.id;
+            document.getElementById("question").textContent = "0" + name;
+
+            guessing = true;
+        }
+
+        function mark(region) {
+
+            if (region.id.includes("prefecture")) return;
+
+            if (marked.has(region.id)) {
+                marked.delete(region.id);
+                region.classList.remove("selected");
+                region.style.fill = region.dataset.originalFill;
+            } else {
+                marked.add(region.id);
+                region.classList.add("selected");
+                region.style.fill = "#F4D35E";
+            }
+            document.getElementById("selected").classList.remove("show");
+            document.getElementById("selectedKanji").classList.remove("show");
+
+            if(marked.size != 0){
+                let kanjiArray = [];
+                marked.forEach(region => { 
+                    kanjiArray.push(regions.find(({ id }) => id === region).querySelector("title")?.textContent);
+                })
+
+                document.getElementById("selected").textContent = Array.from(marked).join(" | ").replace(/[0-9]/g, "");
+                document.getElementById("selected").classList.add("show");
+
+                document.getElementById("selectedKanji").textContent = Array.from(kanjiArray).join(" | ").replace(/[0-9]/g, "");
+                document.getElementById("selectedKanji").classList.add("show");
+            }
+
+        }
+
+        function reveal() {
+
+            guessing = false;
+            const answers = new Set(currentTarget.correct);
+            
+            let correct = new Set( [...marked].filter(id => answers.has(id)) );
+            let wrong = new Set( [...marked].filter(id => !answers.has(id)) );
+            let wrongneeded = new Set( [...answers].filter(id => !marked.has(id)) );
+
+            regions.forEach(region => {
+                if (correct.has(region.id)) {
+                    region.style.fill = "#2ECC71";
+                }
+                else if (wrong.has(region.id)) {
+                    region.style.fill = "#E74C3C";
+                }
+                else if (wrongneeded.has(region.id)) {
+                    region.style.fill = "#1F6FEB";
+                }
+            });
+
+            let kanjiArray = [];
+            answers.forEach(region => { 
+                kanjiArray.push(regions.find(({ id }) => id === region).querySelector("title")?.textContent);
+            })
+
+            document.getElementById("municipalitiesKanji").textContent = Array.from(kanjiArray).join(" | ").replace(/[0-9]/g, "");
+            document.getElementById("municipalities").textContent = currentTarget.correct.join(" | ").replace(/[0-9]/g, "");
+
+            document.getElementById("legendBox").classList.add("show");
+            document.getElementById("municipalities").classList.add("show");
+            document.getElementById("municipalitiesKanji").classList.add("show");
+        }
+
+        function resetAndContinue() {
+            if (guessing) return;
+
+            document.getElementById("selected").classList.remove("show");
+            document.getElementById("selectedKanji").classList.remove("show");
+
+            regions.forEach(r => {
+                r.style.fill = r.dataset.originalFill;
+            });
+
+            marked.clear();
+
+            document.getElementById("municipalities").classList.remove("show");
+            document.getElementById("municipalitiesKanji").classList.remove("show");
+            document.getElementById("legendBox").classList.remove("show");
+
+            loadQuestion()
+
+        }
+
+        regions.forEach(region => {
+            region.addEventListener("click", (e) => {
+                if (!guessing) return;
+                e.stopPropagation();
+                mark(region);
+            });
+        });
+
+        window.buttonPress = function() {
+            if (guessing) {
+                reveal()
+            }
+            else {
+                resetAndContinue();
+            }
+        };
+
+        document.addEventListener("keydown", (e) => {
+            switch (e.code){
+                case "Space":
+                case "Enter":
+                    if (guessing) {
+                        reveal()
+                        break;
+                    }
+                    else {
+                        resetAndContinue();
+                        break;
+                    }
+                }
+        });
+
+        let viewBox = svg.viewBox.baseVal;
+
+        const baseWidth = viewBox.width;
+        const baseHeight = viewBox.height;
+        
+        const MIN_ZOOM = 0.5;
+        const MAX_ZOOM = 35;
+
+        let isPanning = false;
+        let startMouse = {x: 0, y: 0};
+        let startViewBox = {x: 0, y: 0};
+
+        function updateViewBox() {
+            svg.setAttribute(
+                "viewBox",
+                `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`
+            );
+        }
+
+        function getSvgMousePosition(e) {
+
+            const rect = svg.getBoundingClientRect();
+            const viewAspect = viewBox.width / viewBox.height;
+            const rectAspect = rect.width / rect.height;
+
+            let renderedWidth = rect.width;
+            let renderedHeight = rect.height;
+
+            let offsetX = 0;
+            let offsetY = 0;
+
+            if (rectAspect > viewAspect) {
+                renderedWidth = rect.height * viewAspect;
+                offsetX = (rect.width - renderedWidth) / 2;
+            } 
+            else {
+                renderedHeight = rect.width / viewAspect;
+                offsetY = (rect.height - renderedHeight) / 2;
+            }
+
+            return {
+                x: (e.clientX - rect.left - offsetX) / renderedWidth,
+                y: (e.clientY - rect.top - offsetY) / renderedHeight
+            };
+
+        }
+
+        svg.addEventListener("mousedown", e => {
+            isPanning = true;
+
+            const mouse = getSvgMousePosition(e);
+
+            startMouse.x = mouse.x;
+            startMouse.y = mouse.y;
+
+            startViewBox.x = viewBox.x;
+            startViewBox.y = viewBox.y;
+
+            svg.style.cursor = "grabbing";
+
+            e.preventDefault();
+        });
+
+        window.addEventListener("mouseup", () => {
+            isPanning = false;
+            svg.style.cursor = "grab";
+        });
+
+        window.addEventListener("mousemove", e => {
+            if (!isPanning) return;
+
+            const mouse = getSvgMousePosition(e);
+
+            const dx = (mouse.x - startMouse.x) * viewBox.width;
+            const dy = (mouse.y - startMouse.y) * viewBox.height;
+
+            viewBox.x = startViewBox.x - dx;
+
+            viewBox.y = startViewBox.y - dy;
+
+            updateViewBox();
+        });
+
+        svg.addEventListener("wheel", e => {
+            e.preventDefault();
+
+            const zoomFactor = 1.1;
+            const mouse = getSvgMousePosition(e);
+            const scale = baseWidth / viewBox.width;
+
+            let newScale = scale * (e.deltaY < 0 ? zoomFactor : 1 / zoomFactor);
+
+            newScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, newScale));
+
+            const newWidth = baseWidth / newScale;
+            const newHeight = baseHeight / newScale;
+
+            viewBox.x += (viewBox.width - newWidth) * mouse.x;
+            viewBox.y += (viewBox.height - newHeight) * mouse.y;
+
+            viewBox.width = newWidth;
+            viewBox.height = newHeight;
+
+            updateViewBox();
+        }, { passive:false });
+
+        loadQuestions();
+    });
+});
+</script>
+
+</body>
+</html>

@@ -7,159 +7,155 @@
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body>
-<div id="page">
-    <div id="mapWrapper">
-        <div id="svgs">
-            <div id="layerContainer">
-                <svg viewBox="0 0 300 600" width="300" height="600" id="background" class="shown">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="horizontal" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 27.5 295 L 77.5 295 L 150 150 L 222.5 295 L 272.5 295 L 150 50 z M 27.5 305 L 150 550 L 272.5 305 L 222.5 305 L 150 450 L 77.5 305 L 27.5 305 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="horizontalsmall" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150,175 88.75,297.5 h 25 L 150,225 l 36.25,72.5 h 25 z M 88.75,302.5 150,425 211.25,302.5 h -25 L 150,375 113.75,302.5 Z" />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="genericthin" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 150 550 L 280.25 300 L 150 50 z M 150 100 L 254.19922 300 L 150 500 L 45.800781 300 L 150 100 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="horizontalthin" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 21.703125 296.25 L 47.753906 296.25 L 150 100 L 252.24609 296.25 L 278.29688 296.25 L 150 50 z M 21.703125 303.75 L 150 550 L 278.29688 303.75 L 252.24609 303.75 L 150 500 L 47.753906 303.75 L 21.703125 303.75 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="outerrightsmall" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="m 150,175 -65.125,125 47.84961,91.84277 13.02539,-25 L 110.9248,300 118.53027,285.40332 150,225 163.02539,200 Z m 17.27441,33.15722 -13.02441,25 L 189.07519,300 184.63867,308.51562 160.44433,354.9541 150,375 136.97461,400 150,425 215.125,300 Z" />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="kagawa" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 210.9375 266.96094 L 228.15039 300 L 202.48828 349.25391 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 71.849609 300 L 141.5 166.31641 L 115.44922 116.31641 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="shizuoka" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 136.97656 74.998047 L 150 100 L 202.89258 201.51953 L 254.19922 300 L 207.34766 389.92773 L 150 500 L 136.97461 525 L 150 550 L 280.25 300 L 150 50 z M 131.97656 84.595703 L 19.75 300 L 131.97461 515.4043 L 145 490.4043 L 45.800781 300 L 145 109.5957 L 131.97656 84.595703 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="aomori" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 54.298828 233.68555 L 80.349609 283.68555 L 150 150 L 174.31055 196.66016 L 228.15039 300 L 254.20117 349.99805 L 280.25 300 L 150 50 z M 45.798828 250 L 19.75 300 L 150 550 L 245.70117 366.31445 L 219.65039 316.31445 L 150 450 L 125.98828 403.91211 L 71.849609 300 L 45.798828 250 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="outerleft" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100.00195 L 150 150 L 217.72656 279.99414 L 228.15039 300 L 158.5 433.68359 L 184.55078 483.68359 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 19.75 300 L 150 550 L 176.05078 500 L 150 450 L 94.023438 342.55859 L 71.849609 300 L 141.5 166.31641 L 115.44922 116.31641 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="outerright" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 71.849609 300 L 87.060547 270.80664 L 150 150 L 176.05078 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 228.15039 300 L 219.27734 317.03125 L 170.88867 409.9082 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 184.54883 116.31445 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="outerleftthin" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 136.99414 74.960938 L 220.51367 235.26758 L 220.47461 235.26758 L 254.19922 300 L 155 490.40234 L 168.02539 515.40234 L 280.25 300 L 150 50 z M 131.99414 84.558594 L 19.75 300 L 150 550 L 163.02539 525 L 150 500 L 87.921875 380.8457 L 45.800781 300 L 145.01953 109.55859 L 131.99414 84.558594 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="htypeleft" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 228.15039 300 L 254.20117 350 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 54.300781 233.68555 L 80.349609 283.68555 L 141.5 166.31641 L 115.44922 116.31641 z M 45.798828 250 L 19.75 300 L 150 550 L 176.05078 500 L 150 450 L 71.849609 300 L 45.798828 250 z M 219.65039 316.31445 L 158.5 433.68359 L 184.55078 483.68359 L 245.69922 366.31445 L 219.65039 316.31445 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="htypeleftthin" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 136.97461 75 L 150 100 L 254.19922 300 L 267.22461 325.00195 L 280.25 300 L 150 50 z M 131.97461 84.597656 L 37.775391 265.40234 L 50.800781 290.40234 L 145 109.59766 L 131.97461 84.597656 z M 32.775391 275 L 19.75 300 L 150 550 L 163.02539 525 L 150 500 L 45.800781 300 L 32.775391 275 z M 249.19922 309.59766 L 155 490.40234 L 168.02539 515.40234 L 262.22461 334.59766 L 249.19922 309.59766 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenrightsmall" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="m 150,175 -47.84961,91.84278 13.02441,24.99999 1.55079,-2.97656 L 150,225 163.02441,200 Z m 17.27539,33.15722 -13.02539,25 10.04297,19.27637 8.33886,16.00488 L 189.07519,300 202.10058,325 215.125,300 Z M 97.899414,275 84.875,300 l 47.84961,91.84277 13.02539,-25 L 134.69238,345.61914 110.9248,300 Z m 86.925776,33.15723 -5.86718,11.26171 -22.93067,44.0127 L 150,375 136.97461,400 150,425 197.85058,333.15723 Z" />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenright" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 54.298828 233.68555 L 80.349609 283.68555 L 89.535156 266.05273 L 150 150 L 176.04883 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 203.17383 252.06055 L 207.39453 260.16016 L 228.15039 300 L 254.20117 350 L 280.25 300 L 184.54883 116.31445 z M 45.798828 250 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 108.22852 369.82422 L 71.849609 300 L 45.798828 250 z M 219.65039 316.31445 L 199.61523 354.76953 L 199.00195 355.94727 L 150 450 L 123.94922 500 L 150 550 L 245.70117 366.31445 L 219.65039 316.31445 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="htyperight" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 45.798828 349.99805 L 71.849609 300 L 150 150 L 176.04883 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 219.65039 283.68555 L 245.70117 233.68555 L 184.54883 116.31445 z M 254.20117 250.00195 L 228.15039 300 L 195.69531 362.29297 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 254.20117 250.00195 z M 80.349609 316.31445 L 54.298828 366.31445 L 115.44922 483.68555 L 141.5 433.68555 L 80.349609 316.31445 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenleftthin" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 136.97461 75 L 150 100 L 207.35938 210.0957 L 249.19922 290.4043 L 262.22461 265.40234 L 150 50 z M 131.97461 84.597656 L 19.75 300 L 32.775391 325 L 45.800781 300 L 111.42383 174.04297 L 145 109.59766 L 131.97461 84.597656 z M 267.22461 275 L 254.19922 300 L 183.05664 436.54883 L 155 490.40234 L 168.02539 515.40234 L 280.25 300 L 267.22461 275 z M 50.800781 309.59766 L 37.775391 334.59766 L 150 550 L 163.02539 524.99805 L 150 500 L 150 499.99805 L 93.023438 390.63672 L 50.800781 309.59766 z " />
-                </svg>
-                <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenleft" class="layer">
-                    <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
-                    <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 219.65039 283.68359 L 245.70117 233.68555 L 150 50 z M 115.44922 116.31445 L 19.75 300 L 45.798828 349.99805 L 71.849609 300 L 82.085938 280.35352 L 125.19727 197.60742 L 141.5 166.31445 L 115.44922 116.31445 z M 254.20117 250 L 228.15039 300 L 226.94727 302.31055 L 181.81445 388.93555 L 158.5 433.68359 L 184.55078 483.68359 L 280.25 300 L 254.20117 250 z M 80.349609 316.31445 L 54.298828 366.31445 L 150 550 L 176.05078 500 L 150 450 L 94.802734 344.05469 L 80.349609 316.31445 z " />
-                </svg>
-            </div>
-            <div id="name">name</div>
+<div id="mapContainer">
+    <div id="svgs" class="background">
+        <div id="layerContainer">
+            <svg viewBox="0 0 300 600" width="300" height="600" id="background" class="shown">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="horizontal" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 22 295 L 74 295 L 150 150 L 226 295 L 278 295 L 150 50 z M 22 305 L 150 550 L 278 305 L 225 305 L 150 450 L 75 305 L 22 305 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="horizontalsmall" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150,175 88.75,297.5 h 25 L 150,225 l 36.25,72.5 h 25 z M 88.75,302.5 150,425 211.25,302.5 h -25 L 150,375 113.75,302.5 Z" />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="genericthin" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 150 550 L 280.25 300 L 150 50 z M 150 100 L 254.19922 300 L 150 500 L 45.800781 300 L 150 100 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="horizontalthin" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 21.703125 296.25 L 47.753906 296.25 L 150 100 L 252.24609 296.25 L 278.29688 296.25 L 150 50 z M 21.703125 303.75 L 150 550 L 278.29688 303.75 L 252.24609 303.75 L 150 500 L 47.753906 303.75 L 21.703125 303.75 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="outerrightsmall" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="m 150,175 -65.125,125 47.84961,91.84277 13.02539,-25 L 110.9248,300 118.53027,285.40332 150,225 163.02539,200 Z m 17.27441,33.15722 -13.02441,25 L 189.07519,300 184.63867,308.51562 160.44433,354.9541 150,375 136.97461,400 150,425 215.125,300 Z" />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="kagawa" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 210.9375 266.96094 L 228.15039 300 L 202.48828 349.25391 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 71.849609 300 L 141.5 166.31641 L 115.44922 116.31641 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="shizuoka" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 136.97656 74.998047 L 150 100 L 202.89258 201.51953 L 254.19922 300 L 207.34766 389.92773 L 150 500 L 136.97461 525 L 150 550 L 280.25 300 L 150 50 z M 131.97656 84.595703 L 19.75 300 L 131.97461 515.4043 L 145 490.4043 L 45.800781 300 L 145 109.5957 L 131.97656 84.595703 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="aomori" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 54.298828 233.68555 L 80.349609 283.68555 L 150 150 L 174.31055 196.66016 L 228.15039 300 L 254.20117 349.99805 L 280.25 300 L 150 50 z M 45.798828 250 L 19.75 300 L 150 550 L 245.70117 366.31445 L 219.65039 316.31445 L 150 450 L 125.98828 403.91211 L 71.849609 300 L 45.798828 250 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="outerleft" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100.00195 L 150 150 L 217.72656 279.99414 L 228.15039 300 L 158.5 433.68359 L 184.55078 483.68359 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 19.75 300 L 150 550 L 176.05078 500 L 150 450 L 94.023438 342.55859 L 71.849609 300 L 141.5 166.31641 L 115.44922 116.31641 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="outerright" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 71.849609 300 L 87.060547 270.80664 L 150 150 L 176.05078 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 228.15039 300 L 219.27734 317.03125 L 170.88867 409.9082 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 184.54883 116.31445 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="outerleftthin" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 136.99414 74.960938 L 220.51367 235.26758 L 220.47461 235.26758 L 254.19922 300 L 155 490.40234 L 168.02539 515.40234 L 280.25 300 L 150 50 z M 131.99414 84.558594 L 19.75 300 L 150 550 L 163.02539 525 L 150 500 L 87.921875 380.8457 L 45.800781 300 L 145.01953 109.55859 L 131.99414 84.558594 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="htypeleft" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 228.15039 300 L 254.20117 350 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 54.300781 233.68555 L 80.349609 283.68555 L 141.5 166.31641 L 115.44922 116.31641 z M 45.798828 250 L 19.75 300 L 150 550 L 176.05078 500 L 150 450 L 71.849609 300 L 45.798828 250 z M 219.65039 316.31445 L 158.5 433.68359 L 184.55078 483.68359 L 245.69922 366.31445 L 219.65039 316.31445 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="htypeleftthin" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 136.97461 75 L 150 100 L 254.19922 300 L 267.22461 325.00195 L 280.25 300 L 150 50 z M 131.97461 84.597656 L 37.775391 265.40234 L 50.800781 290.40234 L 145 109.59766 L 131.97461 84.597656 z M 32.775391 275 L 19.75 300 L 150 550 L 163.02539 525 L 150 500 L 45.800781 300 L 32.775391 275 z M 249.19922 309.59766 L 155 490.40234 L 168.02539 515.40234 L 262.22461 334.59766 L 249.19922 309.59766 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenrightsmall" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="m 150,175 -47.84961,91.84278 13.02441,24.99999 1.55079,-2.97656 L 150,225 163.02441,200 Z m 17.27539,33.15722 -13.02539,25 10.04297,19.27637 8.33886,16.00488 L 189.07519,300 202.10058,325 215.125,300 Z M 97.899414,275 84.875,300 l 47.84961,91.84277 13.02539,-25 L 134.69238,345.61914 110.9248,300 Z m 86.925776,33.15723 -5.86718,11.26171 -22.93067,44.0127 L 150,375 136.97461,400 150,425 197.85058,333.15723 Z" />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenright" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 54.298828 233.68555 L 80.349609 283.68555 L 89.535156 266.05273 L 150 150 L 176.04883 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 203.17383 252.06055 L 207.39453 260.16016 L 228.15039 300 L 254.20117 350 L 280.25 300 L 184.54883 116.31445 z M 45.798828 250 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 108.22852 369.82422 L 71.849609 300 L 45.798828 250 z M 219.65039 316.31445 L 199.61523 354.76953 L 199.00195 355.94727 L 150 450 L 123.94922 500 L 150 550 L 245.70117 366.31445 L 219.65039 316.31445 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="htyperight" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 19.75 300 L 45.798828 349.99805 L 71.849609 300 L 150 150 L 176.04883 100 L 150 50 z M 184.54883 116.31445 L 158.5 166.31445 L 219.65039 283.68555 L 245.70117 233.68555 L 184.54883 116.31445 z M 254.20117 250.00195 L 228.15039 300 L 195.69531 362.29297 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 254.20117 250.00195 z M 80.349609 316.31445 L 54.298828 366.31445 L 115.44922 483.68555 L 141.5 433.68555 L 80.349609 316.31445 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenleftthin" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 136.97461 75 L 150 100 L 207.35938 210.0957 L 249.19922 290.4043 L 262.22461 265.40234 L 150 50 z M 131.97461 84.597656 L 19.75 300 L 32.775391 325 L 45.800781 300 L 111.42383 174.04297 L 145 109.59766 L 131.97461 84.597656 z M 267.22461 275 L 254.19922 300 L 183.05664 436.54883 L 155 490.40234 L 168.02539 515.40234 L 280.25 300 L 267.22461 275 z M 50.800781 309.59766 L 37.775391 334.59766 L 150 550 L 163.02539 524.99805 L 150 500 L 150 499.99805 L 93.023438 390.63672 L 50.800781 309.59766 z " />
+            </svg>
+            <svg viewBox="0 0 300 600" width="300" height="600" id="shurikenleft" class="layer">
+                <rect style="fill:#646464;fill-opacity:1;stroke:none;" width="300" height="600" x="0" y="0" />
+                <path style="fill:#ffffff;" d="M 150 50 L 123.94922 100 L 150 150 L 219.65039 283.68359 L 245.70117 233.68555 L 150 50 z M 115.44922 116.31445 L 19.75 300 L 45.798828 349.99805 L 71.849609 300 L 82.085938 280.35352 L 125.19727 197.60742 L 141.5 166.31445 L 115.44922 116.31445 z M 254.20117 250 L 228.15039 300 L 226.94727 302.31055 L 181.81445 388.93555 L 158.5 433.68359 L 184.55078 483.68359 L 280.25 300 L 254.20117 250 z M 80.349609 316.31445 L 54.298828 366.31445 L 150 550 L 176.05078 500 L 150 450 L 94.802734 344.05469 L 80.349609 316.31445 z " />
+            </svg>
         </div>
-        <div id="map"></div>
-        <div id="prefectures"></div>
-        <div id="legend_colors">
-            <div class="legend-item">
-                <span class="color-box correct"></span>
-                <span>Correct</span>
-            </div>
-
-            <div class="legend-item">
-                <span class="color-box wrong"></span>
-                <span>Wrong</span>
-            </div>
-
-            <div class="legend-item">
-                <span class="color-box missing"></span>
-                <span>Missing</span>
-            </div>
-        </div>
-        <button id="continue" onclick="buttonPress()">
-            Continue
-            <div id="notice">
-                spacebar
-            </div>
-        </button>
+        <div id="name" class="questionBoxText">name</div>
+        <div id="selected" class="questionBoxText selectedAnswer"></div>
+        <div id="selectedKanji" class="questionBoxText selectedAnswer"></div>
     </div>
+    <div id="map"></div>
+    <div id="prefecturesContainer">
+        <div id="prefectures" class="background prefectures"></div>
+        <div id="prefecturesKanji" class="background prefectures"></div>
+    </div>
+    <div id="legendBox" class="background">
+        <div class="legendItem">
+            <span class="colorBox correct"></span>
+            <span>Correct</span>
+        </div>
+
+        <div class="legendItem">
+            <span class="colorBox wrong"></span>
+            <span>Wrong</span>
+        </div>
+
+        <div class="legendItem">
+            <span class="colorBox missing"></span>
+            <span>Missing</span>
+        </div>
+    </div>
+    <button id="continueButton" class="background" onclick="buttonPress()">
+        Continue
+        <div id="continueButtonNotice">
+            spacebar
+        </div>
+    </button>
+    <a id="homeButton" class="background" href="index.html">↩</a>
 </div>
 
-<a id="homeButton" href="index.html">↩</a>
-
 <style>
-    
-path { 
-    transition: fill 0.3s ease;
-    cursor: crosshair;
-}
 
-#name {
+.questionBoxText {
     margin: 0;
     text-align: center;
-    font-size: 24px;
+    font-size: 1.5rem;
+}
+
+.selectedAnswer {
+    opacity: 0;
+    transform: translateY(-0.375rem);
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 #svgs {
-    width: 320px;
-    height: 650px;
+    width: 20rem;
+    min-height: 40rem;
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
     
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 0.625rem;
+    left: 0.625rem;
 
     justify-content: center;
     align-items: center;
 
     display: flex;
     flex-direction: column;
-    gap: 6px;
-
-    padding: 0px;
-    border-radius: 6px;
-
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(4px);
 
 }
 
 #layerContainer {
     position: relative;
     width: 100%;
-    height: 600px;
+    height: 37.5rem;
 }
 
 .layer {
@@ -185,42 +181,33 @@ path {
     transition: opacity 0.5s ease;
 }
 
-#map {
-    width: 100%;
-    height: 100%;
-    display: block;
-    cursor: grab;
+#prefecturesContainer {
+    position: absolute;
+    max-width: 33vw;
+    top: 0.625rem;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    pointer-events: none;
+    font-size: 1rem;
+    text-align: center;
+    transform: translate(-50%, 0);
 }
 
-#prefectures
- {
+.prefectures {
     opacity: 0;
     pointer-events: none;
+    transform: translateY(-0.5rem);
     transition: opacity 0.25s ease, transform 0.25s ease;
-    
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translate(-50%, -6px);
 
+    text-align: center;
 
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.375rem;
 
-    padding: 8px;
-    border-radius: 6px;
-
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(4px);
-
-    font-size: 20px;
-}
-
-#prefectures.show {
-    opacity: 1;
-    transform: translate(-50%, 0);
-    pointer-events: auto;    
+    font-size: 1.5rem;
 }
 
 </style>
@@ -238,135 +225,42 @@ document.addEventListener("DOMContentLoaded", () => {
         const svg = map.querySelector("svg");
         svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
         const regions = [...svg.querySelectorAll("path[id]")];
+
         const marked = new Set();
-        const questions = [
-            {
-                id: "horizontal",
-                name: "Horizontal",
-                correct: new Set(["Saga", "Shimane", "Tottori"]),
-                key: "Saga | Shimane | Tottori"
-            },
-            {
-                id: "horizontalsmall",
-                name: "Horizontal Small",
-                correct: new Set(["Saga"]),
-                key: "Saga"
-            },
-            {
-                id: "horizontalthin",
-                name: "Horizontal Thin",
-                correct: new Set(["Saga"]),
-                key: "Saga"
-            },
-            {
-                id: "genericthin",
-                name: "Generic Thin",
-                correct: new Set(["Kagoshima", "Yamaguchi", "Aichi", "Nagano"]),
-                key: "Kagoshima | Yamaguchi | Aichi | Nagano"
-            },
-            {
-                id: "kagawa",
-                name: "C Type",
-                correct: new Set(["Kagawa"]),
-                key: "Kagawa"
-            },
-            {
-                id: "outerrightsmall",
-                name: "Diagonal Top Right Small",
-                correct: new Set(["Tokushima", "Hiroshima"]),
-                key: "Tokushima | Hiroshima"
-            },
-            {
-                id: "shizuoka",
-                name: "C Type Thin",
-                correct: new Set(["Shizuoka"]),
-                key: "Shizuoka"
-            },
-            {
-                id: "aomori",
-                name: "Diagonal Side",
-                correct: new Set(["Aomori"]),
-                key: "Aomori"
-            },
-            {
-                id: "outerleft",
-                name: "Diagonal Top Left",
-                correct: new Set(["Mie", "Kochi"]),
-                key: "Mie | Kochi"
-            },
-            {
-                id: "outerright",
-                name: "Diagonal Top Right",
-                correct: new Set(["Miyagi", "Okayama", "Hyogo", "Kyoto"]),
-                key: "Miyagi | Okayama | Hyogo | Kyoto"
-            },
-            {
-                id: "outerleftthin",
-                name: "Diagonal Top Left Thin",
-                correct: new Set(["Ishikawa", "Kumamoto"]),
-                key: "Ishikawa | Kumamoto"
-            },
-            {
-                id: "htypeleft",
-                name: "H Type Left",
-                correct: new Set(["Okinawa", "Shiga", "Niigata", "Ibaraki", "Tochigi", "Saitama"]),
-                key: "Okinawa | Shiga | Niigata | Ibaraki | Tochigi | Saitama"
-            },
-            {
-                id: "htypeleftthin",
-                name: "H Type Left Thin",
-                correct: new Set(["Ibaraki", "Niigata"]),
-                key: "Ibaraki | Niigata"
-            },
-            {
-                id: "shurikenright",
-                name: "Shuriken Right",
-                correct: new Set(["Wakayama", "Nara"]),
-                key: "Wakayama | Nara"
-            },
-            {
-                id: "shurikenrightsmall",
-                name: "Shuriken Right Small",
-                correct: new Set(["Nara"]),
-                key: "Nara"
-            },
-            {
-                id: "htyperight",
-                name: "H Type Right",
-                correct: new Set(["Toyama", "Oita"]),
-                key: "Toyama | Oita"
-            },
-            {
-                id: "shurikenleft",
-                name: "Shuriken Left",
-                correct: new Set(["Chiba", "Gunma", "Gifu"]),
-                key: "Chiba | Gunma | Gifu"
-            },
-            {
-                id: "shurikenleftthin",
-                name: "Shuriken Left Thin",
-                correct: new Set(["Yamanashi", "Nagano"]),
-                key: "Yamanashi | Nagano"
-            }
-        ];
-
-        if (!svg || !regions.length || !questions.length) {
-            console.log = ("Shit's dead");
-            return;
-        }
-
-        const COOLDOWN_TURNS = Math.round(questions.length / 2);
         const cooldowns = {};
-
-        regions.forEach(r => {
-            r.dataset.originalFill =
-                r.getAttribute("fill") ||
-                getComputedStyle(r).fill;
-        });
+        let COOLDOWN_TURNS = 0;
+        let questions;
 
         let guessing = false;
-        let romaji = false;
         let currentTarget = null;
+
+        async function loadQuestions() {
+            const response = await fetch("road_diamonds.json");
+            const data = await response.json();
+            questions = data;
+
+            questions.forEach(q => {
+                q.correct = new Set(q.correct);
+            });
+
+            main();
+            loadQuestion();
+        }
+
+        function main() {
+            if (!svg || !regions.length || !questions.length) {
+                console.log = ("Shit's dead");
+                return;
+            }
+
+            COOLDOWN_TURNS = Math.round(questions.length / 2);
+
+            regions.forEach(r => {
+                r.dataset.originalFill =
+                    r.getAttribute("fill") ||
+                    getComputedStyle(r).fill;
+            });
+        }
 
         function updateCooldowns() {
             for (const id in cooldowns) {
@@ -388,12 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const name = currentTarget.name ||currentTarget.id;
             
-            
-            document.getElementById("name").style.opacity = 0;
-            setTimeout(() => {
-                document.getElementById("name").textContent = name;
-                document.getElementById("name").style.opacity = 1;
-            }, 120);
+            document.getElementById("name").textContent = name;
 
             document.getElementById(currentTarget.id).classList.add('shown');
             document.getElementById(currentTarget.id).classList.remove('layer');
@@ -411,6 +300,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 marked.add(region.id);
                 region.classList.add("selected");
                 region.style.fill = "#F4D35E";
+            }
+            document.getElementById("selected").classList.remove("show");
+            document.getElementById("selectedKanji").classList.remove("show");
+
+            document.getElementById("selected").textContent = null;
+            document.getElementById("selectedKanji").textContent = null;
+
+            if(marked.size != 0){
+                let kanjiArray = [];
+                marked.forEach(region => { 
+                    kanjiArray.push(regions.find(({ id }) => id === region).getAttribute("name"));
+                })
+
+                document.getElementById("selected").textContent = Array.from(marked).join(" | ").replace(/[0-9]/g, "");
+                document.getElementById("selected").classList.add("show");
+
+                document.getElementById("selectedKanji").textContent = Array.from(kanjiArray).join(" | ").replace(/[0-9]/g, "");
+                document.getElementById("selectedKanji").classList.add("show");
             }
         }
 
@@ -435,14 +342,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            document.getElementById("prefectures").classList.toggle("show");
-            document.getElementById("prefectures").textContent = currentTarget.key;
-            document.getElementById("legend_colors").classList.toggle("show");
+            let kanjiArray = [];
+            answers.forEach(region => { 
+                kanjiArray.push(regions.find(({id}) => id === region).getAttribute("name"));
+            })
+
+            document.getElementById("prefecturesKanji").textContent = Array.from(kanjiArray).join(" | ").replace(/[0-9]/g, "");
+            document.getElementById("prefectures").textContent = Array.from(answers).join(" | ").replace(/[0-9]/g, "");
+
+            document.getElementById("legendBox").classList.add("show");
+            document.getElementById("prefectures").classList.add("show");
+            document.getElementById("prefecturesKanji").classList.add("show");
 
         }
 
         function resetAndContinue() {
             if (guessing) return;
+
+            document.getElementById("selected").classList.remove("show");
+            document.getElementById("selectedKanji").classList.remove("show");
+
+            document.getElementById("selected").textContent = null;
+            document.getElementById("selectedKanji").textContent = null;
 
             regions.forEach(r => {
                 r.style.fill = r.dataset.originalFill;
@@ -453,8 +374,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             marked.clear();
 
-            document.getElementById("prefectures").classList.toggle("show");
-            document.getElementById("legend_colors").classList.toggle("show");
+            document.getElementById("prefectures").classList.remove("show");
+            document.getElementById("prefecturesKanji").classList.remove("show");
+            document.getElementById("legendBox").classList.remove("show");
 
             loadQuestion()
 
@@ -598,7 +520,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateViewBox();
         }, { passive:false });
 
-        loadQuestion();
+        loadQuestions();
     });
 });
 </script>

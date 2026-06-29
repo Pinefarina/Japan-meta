@@ -1,0 +1,92 @@
+[
+{
+    "id": "horizontal",
+    "name": "Horizontal",
+    "correct": ["Saga", "Shimane", "Tottori"]
+},
+{
+    "id": "horizontalsmall",
+    "name": "Horizontal Small",
+    "correct": ["Saga"]
+},
+{
+    "id": "horizontalthin",
+    "name": "Horizontal Thin",
+    "correct": ["Saga"]
+},
+{
+    "id": "genericthin",
+    "name": "Generic Thin",
+    "correct": ["Kagoshima", "Yamaguchi", "Aichi", "Nagano"]
+},
+{
+    "id": "kagawa",
+    "name": "C Type",
+    "correct": ["Kagawa"]
+},
+{
+    "id": "outerrightsmall",
+    "name": "Diagonal Top Right Small",
+    "correct": ["Tokushima", "Hiroshima"]
+},
+{
+    "id": "shizuoka",
+    "name": "C Type Thin",
+    "correct": ["Shizuoka"]
+},
+{
+    "id": "aomori",
+    "name": "Diagonal Side",
+    "correct": ["Aomori"]
+},
+{
+    "id": "outerleft",
+    "name": "Diagonal Top Left",
+    "correct": ["Mie", "Kochi"]
+},
+{
+    "id": "outerright",
+    "name": "Diagonal Top Right",
+    "correct": ["Miyagi", "Okayama", "Hyogo", "Kyoto"]
+},
+{
+    "id": "outerleftthin",
+    "name": "Diagonal Top Left Thin",
+    "correct": ["Ishikawa", "Kumamoto"]
+},
+{
+    "id": "htypeleft",
+    "name": "H Type Left",
+    "correct": ["Okinawa", "Shiga", "Niigata", "Ibaraki", "Tochigi", "Saitama"]
+},
+{
+    "id": "htypeleftthin",
+    "name": "H Type Left Thin",
+    "correct": ["Ibaraki", "Niigata"]
+},
+{
+    "id": "shurikenright",
+    "name": "Shuriken Right",
+    "correct": ["Wakayama", "Nara"]
+},
+{
+    "id": "shurikenrightsmall",
+    "name": "Shuriken Right Small",
+    "correct": ["Nara"]
+},
+{
+    "id": "htyperight",
+    "name": "H Type Right",
+    "correct": ["Toyama", "Oita"]
+},
+{
+    "id": "shurikenleft",
+    "name": "Shuriken Left",
+    "correct": ["Chiba", "Gunma", "Gifu"]
+},
+{
+    "id": "shurikenleftthin",
+    "name": "Shuriken Left Thin",
+    "correct": ["Yamanashi", "Nagano"]
+}
+]

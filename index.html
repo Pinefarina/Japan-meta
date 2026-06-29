@@ -15,15 +15,63 @@
                 <path style="fill:#ffffff;" d="M 150,50 19.75,300 150,550 280.25,300 Z m 0,100 78.15039,150 L 150,450 71.849609,300 Z" />
             </svg>
         </a>
-        <a class="menu-btn" href="prefectures.html">県</a>
-        <a id="pc" class="menu-btn" href="phone-codes.html">+81</a>
+        <a class="menu-btn background" href="prefectures.html">県</a>
+        <a id="phoneCodes" class="menu-btn background" href="phone-codes.html">+81</a>
     </div>
 </div>
 
 <style>
 
-#pc {
-    font-size: min(50vw, 150px);
+#phoneCodes {
+    font-size: 9.4rem;
+}
+
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.menu-btn {
+    display: block;
+    width: 18.75rem;
+    aspect-ratio: 1 / 2;
+
+    color: black;
+    text-decoration: none;
+
+    border-radius: 0.625rem;
+
+    font-size: 12.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background 0.15s ease;
+}
+
+.menu-btn:hover {
+    background: rgb(241, 241, 241);
+}
+
+.diamond-btn {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: #646464;
+    cursor: pointer;
+
+    border-radius: 0.625rem;
+    transition: background 0.15s ease;
+}
+
+.diamond-btn:hover {
+    background: #5e5e5e;
 }
 
 </style>
