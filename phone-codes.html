@@ -22,7 +22,7 @@
     </div>
     <a id="homeButton" class="background" href="index.html">↩</a>
     <a id="switchButton" class="background" href="phone-codes-quiz.html">Quiz - normal</a>
-    <a id="expertButton" class="background" href="phone-codes-quiz-expert.html">Quiz - expert</a>
+    <a id="expertButton" class="background" href="phone-codes-quiz-expert.html">Quiz - hard</a>
 </div>
 
 <style>
@@ -90,7 +90,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("phone_codes.svg")
+    fetch("SVG/phone_codes.svg")
     .then(response => response.text())
     .then(svgText => {
 

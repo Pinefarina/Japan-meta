@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
     <title>Road Diamonds</title>
-    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="SVG/favicon.svg" type="image/svg+xml">
 </head>
 <body>
 <div id="mapContainer">
@@ -215,7 +215,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("prefectures.svg")
+    fetch("SVG/prefectures.svg")
     .then(response => response.text())
     .then(svgText => {
 
@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let currentTarget = null;
 
         async function loadQuestions() {
-            const response = await fetch("road_diamonds.json");
+            const response = await fetch("Json/road_diamonds.json");
             const data = await response.json();
             questions = data;
 

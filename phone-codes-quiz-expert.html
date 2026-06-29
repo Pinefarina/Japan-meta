@@ -40,11 +40,66 @@
             spacebar
         </div>
     </button>
-    <a id="homeButton" class="background" href="index.html">↩</a>
-    <a id="switchButton" class="background" href="phone-codes.html">Learning</a>
+    <div id="buttonContainer">
+        <a id="defaultGroup" class="background jsonButton" data-file="Json/phone_codes.json">Japan</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_11-16.json">11-16</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_17-19.json">17-19</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_22-25.json">22-25</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_26-29.json">26-29</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_3-4.json">3-49</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_5.json">52-59</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_6-7.json">6-79</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_8.json">82-29</a>
+        <a class="background jsonButton" data-file="Json/phone_codes_9.json">92-99</a>
+    </div>
+    <div id="backButtonContainer">
+        <a class="background jsonButton" href="phone-codes.html">Learning</a>
+        <a class="background jsonButton" href="index.html">↩</a>
+    </div>
 </div>
 
 <style>
+
+.jsonButton {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2rem;
+    font-style: 1.25rem;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.jsonButton:hover {
+    background: rgb(241, 241, 241);
+}
+
+#backButtonContainer {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.625rem;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    gap: 0.625rem;
+    justify-content: center;
+}
+
+#buttonContainer {
+    position: absolute;
+    max-width: 33vw;
+    bottom: 0.625rem;
+    left: 50%;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 0.375rem;
+    font-size: 1rem;
+    text-align: center;
+    transform: translate(-50%, 0);
+}
 
 #answers {
     position: absolute;
@@ -89,12 +144,19 @@
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+.selectedGroup {
+    background: rgba(235, 235, 235, 0.85);
+    backdrop-filter: blur(0.15rem);
+    box-shadow: inset 0 0.125rem 0.25rem rgba(0,0,0,0.25);
+    transform: translateY(0.125rem);
+}
+
 </style>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-    fetch("phone_codes_expert.svg")
+    fetch("SVG/phone_codes_expert.svg")
     .then(response => response.text())
     .then(svgText => {
 
@@ -112,9 +174,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let guessing = false;
         let currentTarget = null;
+
+        document.getElementById("defaultGroup").classList.add("selectedGroup");
+
+        document.querySelectorAll("a[data-file]").forEach(button => {
+            button.addEventListener("click", () => {
+                document.querySelectorAll("a[data-file]").forEach(btn => {
+                    btn.classList.remove("selectedGroup");
+                });
+                loadQuestions(button.dataset.file);
+                button.classList.add("selectedGroup");
+            });
+        });
         
-        async function loadQuestions() {
-            const response = await fetch("phone_codes.json");
+        async function loadQuestions(file) {
+            const response = await fetch(file);
             const data = await response.json();
 
             questions = Object.entries(data).map(([id, correct]) => ({
@@ -122,17 +196,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 correct
             }));
 
+            marked.clear();
+            Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
+
+            COOLDOWN_TURNS = Math.round(questions.length / 2);
+
             main();
             loadQuestion();
         }
 
         function main() {
             if (!svg || !regions.length || !questions.length) {
-                console.log = ("Shit's dead");
+                console.log = ("Missing svg or json");
                 return;
             }
-
-            COOLDOWN_TURNS = Math.round(questions.length / 2);
 
             regions.forEach(r => {
                 r.dataset.originalFill =
@@ -388,7 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateViewBox();
         }, { passive:false });
 
-        loadQuestions();
+        loadQuestions("Json/phone_codes.json");
     });
 });
 </script>
