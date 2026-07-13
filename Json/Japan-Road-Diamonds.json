@@ -1,0 +1,92 @@
+[
+{
+    "id": "horizontal",
+    "name": "Horizontal",
+    "correct": ["41000", "32000", "31000"]
+},
+{
+    "id": "horizontalsmall",
+    "name": "Horizontal Small",
+    "correct": ["41000"]
+},
+{
+    "id": "horizontalthin",
+    "name": "Horizontal Thin",
+    "correct": ["41000"]
+},
+{
+    "id": "genericthin",
+    "name": "Generic Thin",
+    "correct": ["46000", "35000", "23000", "20000"]
+},
+{
+    "id": "kagawa",
+    "name": "C Type",
+    "correct": ["37000"]
+},
+{
+    "id": "outerrightsmall",
+    "name": "Diagonal Top Right Small",
+    "correct": ["36000", "34000"]
+},
+{
+    "id": "shizuoka",
+    "name": "C Type Thin",
+    "correct": ["22000"]
+},
+{
+    "id": "aomori",
+    "name": "Diagonal Side",
+    "correct": ["2000"]
+},
+{
+    "id": "outerleft",
+    "name": "Diagonal Top Left",
+    "correct": ["24000", "39000"]
+},
+{
+    "id": "outerright",
+    "name": "Diagonal Top Right",
+    "correct": ["4000", "33000", "28000", "26000"]
+},
+{
+    "id": "outerleftthin",
+    "name": "Diagonal Top Left Thin",
+    "correct": ["17000", "43000"]
+},
+{
+    "id": "htypeleft",
+    "name": "H Type Left",
+    "correct": ["47000", "25000", "15000", "8000", "9000", "11000"]
+},
+{
+    "id": "htypeleftthin",
+    "name": "H Type Left Thin",
+    "correct": ["15000", "8000"]
+},
+{
+    "id": "shurikenright",
+    "name": "Shuriken Right",
+    "correct": ["30000", "29000"]
+},
+{
+    "id": "shurikenrightsmall",
+    "name": "Shuriken Right Small",
+    "correct": ["29000"]
+},
+{
+    "id": "htyperight",
+    "name": "H Type Right",
+    "correct": ["16000", "44000"]
+},
+{
+    "id": "shurikenleft",
+    "name": "Shuriken Left",
+    "correct": ["12000", "10000", "21000"]
+},
+{
+    "id": "shurikenleftthin",
+    "name": "Shuriken Left Thin",
+    "correct": ["19000", "20000"]
+}
+]

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/Japan-Phone-Codes-Quiz-Hard.css">
+    <title>Phone Code Quiz Hard</title>
+    <link rel="icon" href="SVG/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<div id="mapContainer">
+    <div id="upperLeftBox">
+        <div id="selectedInfo" class="questionInfo background">
+            <div id="selectedList"></div>
+        </div>
+        <div id="selectedItem" class="questionInfo background"></div>
+    </div>
+    <div id="map"></div>
+    <div id=questionText class="background position-top-middle content-center"></div>
+    <div>
+        <div id="legendBox" class="background">
+            <div class="legendItem">
+                <span class="colorBox correct"></span>
+                <span>Correct Answer</span>
+            </div>
+
+            <div class="legendItem">
+                <span class="colorBox wrong"></span>
+                <span>Wrong Answer</span>
+            </div>
+
+            <div class="legendItem">
+                <span class="colorBox missing"></span>
+                <span>Missing Answer</span>
+            </div>
+        </div>
+        <div id="sliderWrapper" class="background">
+            <p id="rangeText"></p>
+            <div class="sliderContainer">
+                <div class="sliderRange"></div>
+                <input type="range" id="slider1" min="0" max="59" value="0">
+                <input type="range" id="slider2" min="0" max="59" value="59">
+            </div>
+        </div>
+    </div>
+    <div id="backButtonContainer" class="container-top-right">
+        <a class="background jsonButton" href="phone-codes.html">Learning</a>
+        <a class="background jsonButton" href="index.html">↩</a>
+    </div>
+    <button id="continueButton" class="background" onclick="buttonPress()">
+        Continue
+        <div id="continueButtonNotice">
+            spacebar
+        </div>
+    </button>
+</div>
+
+<script src="js/Japan-Phone-Codes-Quiz-Hard.js"></script>
+
+</body>
+</html>
