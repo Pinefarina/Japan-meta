@@ -49,7 +49,7 @@ try {
     animate();
 
 } catch (error) {
-    console.log(error);
+    console.log('Error reading file:', error);
 }}
 
 function updateCooldowns() {
@@ -79,7 +79,7 @@ function loadQuestion() {
 
     const name = String(currentTarget.id).slice(2).replaceAll("0", "");
 
-    document.getElementById(questionText).textContent = "0" + name;
+    document.getElementById("questionText").textContent = "0" + name;
 
     guessing = true;
 

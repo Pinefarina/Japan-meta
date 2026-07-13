@@ -67,7 +67,7 @@ try {
     loadData();
 
 } catch (error) {
-    console.log(error);
+    console.error('Error reading file:', error);
 }}
 
 async function loadData() {
@@ -125,8 +125,9 @@ try {
 
 main();
 } catch (error) {
-    console.log(error);
-}}
+    console.error('Error reading file:', error);
+}
+}
 
 function main() {
     regions.forEach(region => {

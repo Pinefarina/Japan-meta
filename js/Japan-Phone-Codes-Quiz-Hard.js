@@ -69,7 +69,7 @@ try {
     loadData();
 
 } catch (error) {
-    console.log(error);
+    console.error('Error reading file:', error);
 }}
 
 async function loadData() {
@@ -112,8 +112,9 @@ try {
     initializeCamera();
 
 } catch (error) {
-    console.log(error);
-}}
+    console.error('Error reading file:', error);
+}
+}
 
 function sortPaths() {
     regions.forEach(region => {
@@ -140,7 +141,7 @@ function loadQuestion() {
     cooldowns[currentTarget.id] = COOLDOWN_TURNS;
 
     const name = currentTarget.name ||currentTarget.id;
-    document.getElementById(questionText).textContent = "0" + name;
+    document.getElementById("questionText").textContent = "0" + name;
 
     guessing = true;
 
