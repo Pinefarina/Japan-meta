@@ -73,8 +73,8 @@ try {
 async function loadData() {
 try {
     const [csvResponse, jsonResponse] = await Promise.all([
-        fetch("json/data.csv"),
-        fetch("json/Japan-Phone-Code-Labels-Alt.json")
+        fetch("Json/data.csv"),
+        fetch("Json/Japan-Phone-Code-Labels-Alt.json")
     ]);
     const csvData = await csvResponse.text();
     const lines = csvData

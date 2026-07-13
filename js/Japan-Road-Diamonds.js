@@ -52,7 +52,7 @@ try {
 
 async function loadData() {
     const [csvResponse, jsonResponse] = await Promise.all([
-        fetch("json/data-prefectures.csv"),
+        fetch("Json/data-prefectures.csv"),
         fetch("Json/Japan-Road-Diamonds.json")
     ]);
 

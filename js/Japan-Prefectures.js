@@ -51,7 +51,7 @@ try {
 
 async function loadData() {
 try {
-    const response = await fetch("json/data-prefectures.csv");
+    const response = await fetch("Json/data-prefectures.csv");
 
     const csvData = await response.text();
     const lines = csvData
