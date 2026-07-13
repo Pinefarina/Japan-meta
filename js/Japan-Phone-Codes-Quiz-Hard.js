@@ -69,7 +69,7 @@ try {
     loadData();
 
 } catch (error) {
-    console.error('Error reading file:', error);
+    console.log(error);
 }}
 
 async function loadData() {
@@ -112,9 +112,8 @@ try {
     initializeCamera();
 
 } catch (error) {
-    console.error('Error reading file:', error);
-}
-}
+    console.log(error);
+}}
 
 function sortPaths() {
     regions.forEach(region => {

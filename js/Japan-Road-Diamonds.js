@@ -47,7 +47,7 @@ try {
     loadData();
 
 } catch (error) {
-    console.error('Error reading file:', error);
+    console.log(error);
 }}
 
 async function loadData() {

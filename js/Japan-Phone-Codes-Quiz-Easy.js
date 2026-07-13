@@ -49,7 +49,7 @@ try {
     animate();
 
 } catch (error) {
-    console.error('Error reading file:', error);
+    console.log(error);
 }}
 
 function updateCooldowns() {
