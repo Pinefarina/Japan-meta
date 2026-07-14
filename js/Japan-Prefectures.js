@@ -243,12 +243,12 @@ window.addEventListener("mousemove", e => {
 
 function addSvgEventListeners() {
 
-    regions.forEach(region => {
-        region.addEventListener("click", (e) => {
-            if (!guessing) return;
-            e.stopPropagation();
-            reveal(region);
-        });
+    svg.addEventListener("click", (e) => {
+        if (!guessing) return;
+        if (!e.target.matches(".guessing")) return;
+        console.log(e.target);
+        e.stopPropagation();
+        reveal(e.target);
     });
 
     svg.addEventListener("mousedown", e => {

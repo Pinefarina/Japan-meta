@@ -1,10 +1,12 @@
-path {
-    shape-rendering: optimizeSpeed;
-}
-
 path:hover {
     fill: var(--color-path-hover) !important;
     transition: none !important;
+}
+
+.selected {
+    stroke-width: 0.1 !important;
+    stroke-opacity: 1 !important;
+    stroke: var(--color-border);
 }
 
 .interactivePath {
@@ -24,19 +26,6 @@ path:hover {
     stroke-width: 0.2;
 }
 
-.waterPath {
-    stroke: none;
-    fill: var(--color-background);
-    pointer-events: none;
-}
-
-.road {
-    stroke: var(--color-path-inert-stroke);
-    stroke-width: 0.1;
-    fill: none;
-    pointer-events: none;
-}
-
 .borderPath.hideBorder {
     stroke-width: 0.12;
 }
@@ -50,12 +39,6 @@ path:hover {
 .colorPath.hideBorder {
     stroke-opacity: 0.2;
     stroke: var(--color-path-inert-stroke);
-}
-
-#upperLeftBox {
-    opacity: 0;
-    transform: translateY(-0.375rem);
-    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 #Romaji {

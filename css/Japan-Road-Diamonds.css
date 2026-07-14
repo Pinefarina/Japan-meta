@@ -2,7 +2,6 @@ path {
     stroke: var(--color-path-stroke);
     fill: var(--color-path-fill);
     stroke-width: 0.2;
-    shape-rendering: optimizeSpeed;
     stroke-linecap: square;
     stroke-linejoin: bevel;
 }
@@ -10,18 +9,6 @@ path {
 path:hover {
     fill: var(--color-path-hover) !important;
     transition: none !important;
-}
-
-#questionBox {
-    position: absolute;
-    top: 0.625rem;
-    left: 0.625rem;
-
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    width: 20rem;
 }
 
 #svgContainer {

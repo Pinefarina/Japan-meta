@@ -46,7 +46,7 @@ let startViewBox = { x: 0, y: 0 };
 
 let zoomLevel = 0;
 
-async function loadSVG() {
+/* async function loadSVG() {
 try {
     const response = await fetch("SVG/Japan-Phone-Codes-Main.svg");
     const svgText = await response.text();
@@ -76,6 +76,82 @@ try {
         fetch("Json/data.csv"),
         fetch("Json/Japan-Phone-Code-Labels-Alt.json")
     ]);
+    const csvData = await csvResponse.text();
+    const lines = csvData
+        .replace(/\r\n/g, "\n")
+        .trim()
+        .split("\n");
+    const headers = lines[0].split(",");
+
+    data = lines.slice(1).reduce((obj, line) => {
+        const values = line.split(",");
+
+        const row = {};
+
+        headers.forEach((header, index) => {
+            row[header] = values[index];
+        });
+
+        obj[row.code] = row;
+
+        return obj;
+    }, {});
+
+    const labelData = await jsonResponse.json();
+
+    const reordered = {
+        text: labelData.text,
+        x: labelData.x,
+        y: labelData.y,
+        type: labelData.type
+    };
+
+    for (const l of labelData) {
+        const div = document.createElement("div");
+
+        div.textContent = l.text;
+        div.className = "label";
+
+        if (l.type === "small" || l.type === "medium") {
+            div.classList.add("small");
+            labelsSmallContainer.appendChild(div);
+            smallLabels.push({ el: div, ...l });
+        } else {
+            div.classList.add("normal");
+            labelsNormalContainer.appendChild(div);
+            normalLabels.push({ el: div, ...l });
+        }
+    }
+
+main();
+} catch (error) {
+    console.error('Error reading file:', error);
+}
+} */
+
+async function loadData() {
+try {
+    const [svgResponse, csvResponse, jsonResponse] = await Promise.all([
+        fetch("SVG/Japan-Phone-Codes-Main.svg"),
+        fetch("Json/data.csv"),
+        fetch("Json/Japan-Phone-Code-Labels-Alt.json")
+    ]);
+    const svgText = await svgResponse.text();
+    
+    const map = document.getElementById("map");
+    map.innerHTML = svgText;
+
+    svg = map.querySelector("svg");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+    viewBox = svg.viewBox.baseVal;
+    baseWidth = viewBox.width;
+    baseHeight = viewBox.height;
+
+    regions = [...svg.querySelectorAll("path[id]")];
+    
+    addSvgEventListeners();
+
     const csvData = await csvResponse.text();
     const lines = csvData
         .replace(/\r\n/g, "\n")
@@ -246,10 +322,10 @@ function mark(region) {
     }
 
     if (marked.size != 0) {
-        document.getElementById("upperLeftBox").classList.add("show");
+        document.getElementById("infoBox").classList.add("show");
     }
     else {
-        document.getElementById("upperLeftBox").classList.remove("show");
+        document.getElementById("infoBox").classList.remove("show");
     }
 
     document.getElementById("Kanji").textContent = data[region.id]["full-ja"];
@@ -511,4 +587,4 @@ function addSvgEventListeners() {
     }, { passive: false });
 }
 
-loadSVG();
+loadData();
