@@ -46,89 +46,6 @@ let startViewBox = { x: 0, y: 0 };
 
 let zoomLevel = 0;
 
-/* async function loadSVG() {
-try {
-    const response = await fetch("SVG/Japan-Phone-Codes-Main.svg");
-    const svgText = await response.text();
-    
-    const map = document.getElementById("map");
-    map.innerHTML = svgText;
-
-    svg = map.querySelector("svg");
-    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-    viewBox = svg.viewBox.baseVal;
-    baseWidth = viewBox.width;
-    baseHeight = viewBox.height;
-
-    regions = [...svg.querySelectorAll("path[id]")];
-
-    addSvgEventListeners();
-    loadData();
-
-} catch (error) {
-    console.error('Error reading file:', error);
-}}
-
-async function loadData() {
-try {
-    const [csvResponse, jsonResponse] = await Promise.all([
-        fetch("Json/data.csv"),
-        fetch("Json/Japan-Phone-Code-Labels-Alt.json")
-    ]);
-    const csvData = await csvResponse.text();
-    const lines = csvData
-        .replace(/\r\n/g, "\n")
-        .trim()
-        .split("\n");
-    const headers = lines[0].split(",");
-
-    data = lines.slice(1).reduce((obj, line) => {
-        const values = line.split(",");
-
-        const row = {};
-
-        headers.forEach((header, index) => {
-            row[header] = values[index];
-        });
-
-        obj[row.code] = row;
-
-        return obj;
-    }, {});
-
-    const labelData = await jsonResponse.json();
-
-    const reordered = {
-        text: labelData.text,
-        x: labelData.x,
-        y: labelData.y,
-        type: labelData.type
-    };
-
-    for (const l of labelData) {
-        const div = document.createElement("div");
-
-        div.textContent = l.text;
-        div.className = "label";
-
-        if (l.type === "small" || l.type === "medium") {
-            div.classList.add("small");
-            labelsSmallContainer.appendChild(div);
-            smallLabels.push({ el: div, ...l });
-        } else {
-            div.classList.add("normal");
-            labelsNormalContainer.appendChild(div);
-            normalLabels.push({ el: div, ...l });
-        }
-    }
-
-main();
-} catch (error) {
-    console.error('Error reading file:', error);
-}
-} */
-
 async function loadData() {
 try {
     const [svgResponse, csvResponse, jsonResponse] = await Promise.all([
@@ -151,6 +68,10 @@ try {
     regions = [...svg.querySelectorAll("path[id]")];
     
     addSvgEventListeners();
+    setPathClasses();
+    initializeZoom();
+    animate();
+    
 
     const csvData = await csvResponse.text();
     const lines = csvData
@@ -199,21 +120,9 @@ try {
         }
     }
 
-main();
 } catch (error) {
     console.error('Error reading file:', error);
-}
-}
-
-function main() {
-    regions.forEach(region => {
-        if (region.id[0] == 9 && region.id[1] == 9 || region.id[0] == 9 && region.id[1] == 8 ) {
-            region.classList.add("notInteractable");
-        }
-    })
-    initializeZoom();
-    animate();
-}
+}}
 
 function setPathClasses() {
     regions.forEach(region => {
@@ -221,90 +130,42 @@ function setPathClasses() {
         
         if (!(region.id[0] == 9 && region.id[1] == 8) && !(region.id[0] == 9 && region.id[1] == 9) && !(region.id[0] == 9 && region.id[1] == 6) ) {
             municipalities.add(region.id);
+            region.classList.add("interactivePath");
         }
 
         if (region.id[0] == 9 && region.id[1] == 8) {
             borderPaths.add(region.id);
-        }
-
-        if (region.id[0] == 9 && region.id[1] == 6) {
-            region.classList.add("waterPath");
+            region.classList.add("borderPath");
         }
 
         if (region.id[0] == 9 && region.id[1] == 9) {
             colorPaths.add(region.id);
+            region.classList.add("colorPath");
         }
 
     });
+    fillPaths();
 }
 
-function fillPathsZoomed() {
-    regions.forEach(region => {
+function fillPaths() {
+    colorPaths.forEach(region => {
+        const id = Number(region.slice(2));
+        const path = document.getElementById(region);
 
-        if (!region.id) return;
-        
-        if (!(region.id[0] == 9 && region.id[1] == 8) && !(region.id[0] == 9 && region.id[1] == 9) ) {
-            region.classList.add("interactivePath");
+        if (specialColors[id]) {
+            path.style.fill = specialColors[id];
+            path.style.stroke = specialColors[id];
+            return;
         }
 
-        if (region.id[0] == 9 && region.id[1] == 8) {
-            region.classList.add("borderPath");
-        }
+        const normalized = String(id).padEnd(3, "0");
+        const hue = hues[Number(normalized[0])];
+        const shade = Number(normalized.slice(1, 3));
 
-        if (region.id[0] == 9 && region.id[1] == 9) {
-            const id = Number(region.id.slice(2));
-            region.classList.add("colorPath");
+        const lightness = 20 + shade * (60 / 99);
 
-            if (specialColors[id]) {
-                region.style.fill = specialColors[id];
-                region.style.stroke = specialColors[id];
-                return;
-            }
-
-            const normalized = String(id).padEnd(3, "0");
-            const hue = hues[Number(normalized[0])];
-            const shade = Number(normalized.slice(1, 3));
-
-            const lightness = 20 + shade * (60 / 99);
-
-            region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
-            region.style.stroke = `hsl(${hue} 23% ${lightness}%)`;
-        }
-    });
-}
-
-function fillPathsNormal() {
-    regions.forEach(region => {
-
-        if (!region.id) return;
-        
-        if (!(region.id[0] == 9 && region.id[1] == 8) && !(region.id[0] == 9 && region.id[1] == 9) ) {
-            region.classList.add("interactivePath");
-        }
-
-        if (region.id[0] == 9 && region.id[1] == 8) {
-            region.classList.add("borderPath");
-        }
-
-        if (region.id[0] == 9 && region.id[1] == 9) {
-            const id = Number(region.id.slice(2));
-            region.classList.add("colorPath");
-
-            if (specialColors[id]) {
-                region.style.fill = specialColors[id];
-                region.style.stroke = specialColors[id];
-                return;
-            }
-
-            const normalized = String(id).padEnd(3, "0");
-            const hue = hues[Number(normalized[0])];
-            const shade = Number(normalized.slice(1, 2))*10;
-
-            const lightness = 20 + shade * (40 / 60);
-
-            region.style.fill = `hsl(${hue} 23% ${lightness}%)`;
-            region.style.stroke = `hsl(${hue} 23% ${lightness}%)`;
-        }
+        path.style.fill = `hsl(${hue} 23% ${lightness}%)`;
+        path.style.stroke = `hsl(${hue} 23% ${lightness}%)`;
     });
 }
 
@@ -381,9 +242,6 @@ function initializeZoom() {
     document.getElementById("labelsSmall").classList.add("hideLabel");
     document.getElementById("labelsNormal").classList.remove("hideLabel");
 
-    setPathClasses();
-    fillPathsNormal();
-
     municipalities.forEach(municipality => {
         document.getElementById(municipality).classList.add("hideBorder");
     })
@@ -401,7 +259,17 @@ function setZoomFar() {
         document.getElementById(border).classList.add("hideBorder");
     })
 
-    fillPathsNormal();
+    borderPaths.forEach(border => {
+        document.getElementById(border).classList.remove("hideBorder");
+    })
+
+    municipalities.forEach(municipality => {
+        document.getElementById(municipality).classList.add("hideBorder");
+    })
+
+    municipalities.forEach(municipality => {
+        document.getElementById(municipality).classList.remove("showLess");
+    })
 };
 
 function setZoomNormal() {
@@ -409,7 +277,11 @@ function setZoomNormal() {
     document.getElementById("labelsNormal").classList.add("hideLabel");
 
     municipalities.forEach(municipality => {
-        document.getElementById(municipality).classList.add("hideBorder");
+        document.getElementById(municipality).classList.add("showLess");
+    })
+
+    municipalities.forEach(municipality => {
+        document.getElementById(municipality).classList.remove("hideBorder");
     })
 
     colorPaths.forEach(colorPath => {
@@ -417,21 +289,14 @@ function setZoomNormal() {
     })
 
     borderPaths.forEach(border => {
-        document.getElementById(border).classList.remove("hideBorder");
+        document.getElementById(border).classList.add("hideBorder");
     })
-
-    fillPathsZoomed();
 };
 
 function setZoomClose() {
     municipalities.forEach(municipality => {
-        document.getElementById(municipality).classList.remove("hideBorder");
+        document.getElementById(municipality).classList.remove("showLess");
     })
-
-    borderPaths.forEach(border => {
-        document.getElementById(border).classList.add("hideBorder");
-    })
-
 };
 
 function lerp(a, b, t) {
@@ -540,11 +405,10 @@ window.addEventListener("mousemove", e => {
 });
 
 function addSvgEventListeners() {
-    regions.forEach(region => {
-        region.addEventListener("click", e => {
-            e.stopPropagation();
-            mark(region);
-        });
+    svg.addEventListener("click", e => {
+        if (!e.target.matches(".interactivePath")) return;
+        e.stopPropagation();
+        mark(e.target);
     });
 
     svg.addEventListener("mousedown", e => {

@@ -243,10 +243,9 @@ window.addEventListener("mousemove", e => {
 
 function addSvgEventListeners() {
 
-    svg.addEventListener("click", (e) => {
+    svg.addEventListener("click", e => {
         if (!guessing) return;
         if (!e.target.matches(".guessing")) return;
-        console.log(e.target);
         e.stopPropagation();
         reveal(e.target);
     });

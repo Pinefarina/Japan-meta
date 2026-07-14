@@ -16,14 +16,20 @@ path:hover {
     transition: stroke-opacity 0.25s ease;
 }
 
+.interactivePath.showLess {
+    stroke-opacity: 0.2;
+    stroke: var(--color-path-inert-stroke);
+}
+
 .interactivePath.hideBorder {
     stroke-opacity: 0;
 }
 
 .borderPath {
     stroke: var(--color-border);
-    fill: none;
     stroke-width: 0.2;
+    pointer-events: none;
+    fill: none;
 }
 
 .borderPath.hideBorder {
@@ -34,6 +40,7 @@ path:hover {
     stroke: var(--color-border) !important;
     stroke-width: 0.1;
     transition: stroke-opacity 0.25s ease;
+    pointer-events: none;
 }
 
 .colorPath.hideBorder {
