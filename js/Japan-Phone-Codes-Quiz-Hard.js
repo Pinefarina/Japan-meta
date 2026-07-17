@@ -323,8 +323,17 @@ function updateSlider() {
 
     setSliderText(min, max);
 
-    filterMin = min;
-    filterMax = max;
+    if (min < 10 ) {
+        filterMin = min * 10;
+    } else {
+        filterMin = min;
+    }
+
+    if (max < 10 ) {
+        filterMax = max * 10;
+    } else {
+        filterMax = max;
+    }
 
     marked.clear();
     Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
