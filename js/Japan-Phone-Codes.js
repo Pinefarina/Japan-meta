@@ -49,7 +49,7 @@ let zoomLevel = 0;
 async function loadData() {
 try {
     const [svgResponse, csvResponse, jsonResponse] = await Promise.all([
-        fetch("SVG/Japan-Phone-Codes-Main.svg"),
+        fetch("SVG/Japan-Phone-Codes.svg"),
         fetch("Json/data.csv"),
         fetch("Json/Japan-Phone-Code-Labels-Alt.json")
     ]);

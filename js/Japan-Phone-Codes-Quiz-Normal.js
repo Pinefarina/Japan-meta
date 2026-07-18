@@ -1,9 +1,29 @@
 var svg;
 var regions;
-var questions;
 
 var COOLDOWN_TURNS = 0;
 const cooldowns = {};
+
+const slider1 = document.getElementById("slider1");
+const slider2 = document.getElementById("slider2");
+const range = document.querySelector(".sliderRange");
+const rangeText = document.getElementById("rangeText");
+
+slider1.addEventListener("input", updateSlider);
+slider2.addEventListener("input", updateSlider);
+
+var filterMin = 0;
+var filterMax = 99;
+
+const sliderIndex = [
+    11, 12, 13, 14, 15, 16, 17, 18, 19,
+    22, 23, 24, 25, 26, 27, 28, 29, 3,
+    4, 42, 43, 44, 45, 46, 47, 48, 49,
+    52, 53, 54, 55, 56, 57, 58, 59, 6,
+    72, 73, 74, 75, 76, 77, 78, 79,
+    82, 83, 84, 85, 86, 87, 88, 89,
+    92, 93, 94, 95, 96, 97, 98, 99
+];
 
 let guessing = false;
 let currentTarget = null;
@@ -24,7 +44,7 @@ var startViewBox = {x: 0, y: 0};
 
 async function loadSVG() {
 try {
-    const response = await fetch("SVG/Japan-Phone-Codes-Easy.svg");
+    const response = await fetch("SVG/Japan-Phone-Codes-Normal.svg");
     const svgText = await response.text();
     
     const map = document.getElementById("map");
@@ -39,10 +59,11 @@ try {
 
     regions = [...svg.querySelectorAll("path[id]")];
 
-    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 8)) / 2);
+    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 9)) / 2);
 
     addSvgEventListeners();
     sortPaths();
+    updateSlider();
     initializeCamera();
     loadQuestion();
     animate();
@@ -60,7 +81,7 @@ function updateCooldowns() {
 
 function sortPaths() {
     regions.forEach(region => {
-        if(!(region.id[0] == 9 && region.id[1] == 8)) {
+        if(!(region.id[0] == 9 && region.id[1] == 9)) {
             region.classList.add("prefecturePath");
         }
     });
@@ -69,14 +90,15 @@ function sortPaths() {
 function loadQuestion() {
     updateCooldowns();
 
-    const available = regions.filter(region => !cooldowns[region.id] && (region.id[0] == 9 && region.id[1] == 8));
-    const pool = available.length ? available : regions;
+    const available = regions.filter(region => !cooldowns[region.id] && (region.id[0] == 9 && region.id[1] == 9));
+    const availableFiltered = available.filter(region => Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) >= filterMin && Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) <= filterMax);
+    const pool = availableFiltered.length ? availableFiltered : regions;
 
     currentTarget = pool[Math.floor(Math.random() * pool.length)];
 
     cooldowns[currentTarget.id] = COOLDOWN_TURNS;
 
-    const name = String(currentTarget.id).slice(2).replaceAll("0", "");
+    const name = Number(String(currentTarget.id).slice(2));
 
     document.getElementById("questionText").textContent = "0" + name;
 
@@ -103,6 +125,42 @@ function reveal(region) {
 
     document.getElementById("legendBox").classList.add("show");
     document.getElementById("continueButton").classList.add("show");
+}
+
+function updateSlider() {
+    const min = Math.min(Number(slider1.value), Number(slider2.value));
+    const max = Math.max(Number(slider1.value), Number(slider2.value));
+
+    setSliderText(sliderIndex[min], sliderIndex[max]);
+
+    filterMin = Number(String(sliderIndex[min]).padEnd(4, "0"));
+    filterMax = Number(String(sliderIndex[max]).padEnd(4, "0")) + 99;
+
+    Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
+
+    COOLDOWN_TURNS = Math.round(regions.filter(region => Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) >= filterMin && Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) <= filterMax).length / 2);
+
+    const visualMin = Math.min(+slider1.value, +slider2.value);
+    const visualMax = Math.max(+slider1.value, +slider2.value);
+
+    range.style.left = `${visualMin / 59 * 100}%`;
+    range.style.width = `${(visualMax - visualMin) / 59 * 100 * 0.97}%`;
+
+    if(guessing) {
+        loadQuestion();
+    }
+}
+
+function setSliderText(min, max) {
+    if (min == max){
+        rangeText.textContent = `${min}`;
+    }
+    else if (min == 11 && max == 99){
+        rangeText.textContent = "Everything";
+    }
+    else {
+        rangeText.textContent = `${min} - ${max}`;
+    }
 }
 
 function resetAndContinue() {

@@ -5,13 +5,8 @@
     "correct": ["41000", "32000", "31000"]
 },
 {
-    "id": "horizontalsmall",
+    "id": "horizontalalt",
     "name": "Horizontal Small",
-    "correct": ["41000"]
-},
-{
-    "id": "horizontalthin",
-    "name": "Horizontal Thin",
     "correct": ["41000"]
 },
 {

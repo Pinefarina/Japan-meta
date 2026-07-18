@@ -9,20 +9,12 @@
 
 path {
     stroke: var(--color-path-stroke);
-    fill: transparent;
-    stroke-width: 0.05;
-}
-
-.colorPath {
     fill: var(--color-path-fill);
-    pointer-events: none;
+    stroke-width: 0.1;
+    stroke-linecap: square;
+    stroke-linejoin: bevel;
 }
 
-path:hover {
-    fill: var(--color-path-hover) !important;
-    transition: none !important;
-}
- 
 #sliderWrapper {
     position: absolute;
     bottom: 0.625rem;
@@ -124,31 +116,4 @@ path:hover {
 
 #legendBox {
     bottom: 4.25rem;
-}
-
-.answerRow {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: .5rem;
-    align-items: center;
-}
-
-.answerRow span:nth-child(1) {
-    text-align: right;
-}
-
-.answerRow span:nth-child(2) {
-    text-align: center;
-}
-
-.answerRow span:nth-child(3) {
-    text-align: left;
-}
-
-.questionInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    align-items: center;
-    opacity: 0;
 }

@@ -104,7 +104,3 @@ path:hover {
 .hideLabel {
     opacity: 0 !important;
 }
-
-.notInteractable {
-    pointer-events: none;
-}

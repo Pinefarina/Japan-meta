@@ -50,7 +50,7 @@ const listBox = document.getElementById("selectedInfo");
 
 async function loadSVG() {
 try {
-    const response = await fetch("SVG/Japan-Phone-Codes-Expert.svg");
+    const response = await fetch("SVG/Japan-Phone-Codes-Hard.svg");
     const svgText = await response.text();
     
     const map = document.getElementById("map");
@@ -133,7 +133,7 @@ function loadQuestion() {
     updateCooldowns();
 
     const available = questions.filter(r => !cooldowns[r.id]);
-    const availableFiltered = available.filter(r => Number(String(r.id).padEnd(2, "0").slice(0, 2)) >= filterMin && Number(String(r.id).padEnd(2, "0").slice(0, 2)) <= filterMax);
+    const availableFiltered = available.filter(q => Number(String(q.id).padEnd(4, "0")) >= filterMin && Number(String(q.id).padEnd(4, "0")) <= filterMax);
     const pool = availableFiltered.length ? availableFiltered : questions;
 
     currentTarget = pool[Math.floor(Math.random() * pool.length)];
@@ -318,27 +318,18 @@ function markNotGuessing(region) {
 }
 
 function updateSlider() {
-    const min = Math.min(sliderIndex[slider1.value], sliderIndex[slider2.value]);
-    const max = Math.max(sliderIndex[slider1.value], sliderIndex[slider2.value]);
+    const min = Math.min(Number(slider1.value), Number(slider2.value));
+    const max = Math.max(Number(slider1.value), Number(slider2.value));
 
-    setSliderText(min, max);
+    setSliderText(sliderIndex[min], sliderIndex[max]);
 
-    if (min < 10 ) {
-        filterMin = min * 10;
-    } else {
-        filterMin = min;
-    }
-
-    if (max < 10 ) {
-        filterMax = max * 10;
-    } else {
-        filterMax = max;
-    }
+    filterMin = Number(String(sliderIndex[min]).padEnd(4, "0"));
+    filterMax = Number(String(sliderIndex[max]).padEnd(4, "0")) + 99;
 
     marked.clear();
     Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
 
-    COOLDOWN_TURNS = Math.round(questions.filter(r => Number(String(r.id).padEnd(2, "0").slice(0, 2)) >= filterMin && Number(String(r.id).padEnd(2, "0").slice(0, 2)) <= filterMax).length / 2);
+    COOLDOWN_TURNS = Math.round(questions.filter(q => Number(String(q.id).padEnd(4, "0")) >= filterMin && Number(String(q.id).padEnd(4, "0")) <= filterMax).length / 2);
 
     const visualMin = Math.min(+slider1.value, +slider2.value);
     const visualMax = Math.max(+slider1.value, +slider2.value);

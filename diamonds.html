@@ -18,9 +18,8 @@
                 </svg>
                 <svg viewBox="0 0 300 600" width="300" height="600" class="diamondSvg">
                     <path class="diamond" id="horizontal" d="M 150 50 L 22 295 L 74 295 L 150 150 L 226 295 L 278 295 L 150 50 z M 22 305 L 150 550 L 278 305 L 225 305 L 150 450 L 75 305 L 22 305 z " />
-                    <path class="diamond" id="horizontalsmall" d="M 150,175 88.75,297.5 h 25 L 150,225 l 36.25,72.5 h 25 z M 88.75,302.5 150,425 211.25,302.5 h -25 L 150,375 113.75,302.5 Z" />
+                    <path class="diamond" id="horizontalalt" d="M 150,100 50,295 h 25 l 75,-145 75,145 h 25 z M 50,305 150,500 250,305 H 225 L 150,450 75,305 Z" />
                     <path class="diamond" id="genericthin" d="M 150 50 L 19.75 300 L 150 550 L 280.25 300 L 150 50 z M 150 100 L 254.19922 300 L 150 500 L 45.800781 300 L 150 100 z " />
-                    <path class="diamond" id="horizontalthin" d="M 150 50 L 21.703125 296.25 L 47.753906 296.25 L 150 100 L 252.24609 296.25 L 278.29688 296.25 L 150 50 z M 21.703125 303.75 L 150 550 L 278.29688 303.75 L 252.24609 303.75 L 150 500 L 47.753906 303.75 L 21.703125 303.75 z " />  
                     <path class="diamond" id="outerrightsmall" d="m 150,175 -65.125,125 47.84961,91.84277 13.02539,-25 L 110.9248,300 118.53027,285.40332 150,225 163.02539,200 Z m 17.27441,33.15722 -13.02441,25 L 189.07519,300 184.63867,308.51562 160.44433,354.9541 150,375 136.97461,400 150,425 215.125,300 Z" />
                     <path class="diamond" id="kagawa" d="M 150 50 L 123.94922 100 L 150 150 L 210.9375 266.96094 L 228.15039 300 L 202.48828 349.25391 L 150 450 L 123.94922 500 L 150 550 L 280.25 300 L 150 50 z M 115.44922 116.31641 L 19.75 300 L 115.44922 483.68555 L 141.5 433.68555 L 71.849609 300 L 141.5 166.31641 L 115.44922 116.31641 z " />
                     <path class="diamond" id="shizuoka" d="M 150 50 L 136.97656 74.998047 L 150 100 L 202.89258 201.51953 L 254.19922 300 L 207.34766 389.92773 L 150 500 L 136.97461 525 L 150 550 L 280.25 300 L 150 50 z M 131.97656 84.595703 L 19.75 300 L 131.97461 515.4043 L 145 490.4043 L 45.800781 300 L 145 109.5957 L 131.97656 84.595703 z " />
@@ -46,7 +45,6 @@
     </div>
 
     <div id="map"></div>
-    <div id="questionText" class="background position-top-middle content-center"></div>
     <div id="legendBox" class="background">
         <div class="legendItem">
             <span class="colorBox correct"></span>
@@ -69,7 +67,9 @@
             spacebar
         </div>
     </button>
-    <a id="homeButton" class="background container-top-right" href="index.html">↩</a>
+    <div class="container-top-right buttonContainer">
+        <a class="defaultButton" href="index.html">↩</a>
+    </div>
 </div>
 
 <script src="js/Japan-Road-Diamonds.js"></script>

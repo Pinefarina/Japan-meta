@@ -108,8 +108,6 @@ function loadQuestion() {
     currentTarget = pool[Math.floor(Math.random() * pool.length)];
 
     cooldowns[currentTarget.id] = COOLDOWN_TURNS;
-    
-    document.getElementById("questionText").textContent = currentTarget.name;
 
     document.getElementById(currentTarget.id).classList.add('shown');
     document.getElementById(currentTarget.id).classList.remove('layer');
