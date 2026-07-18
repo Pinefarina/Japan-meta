@@ -41,6 +41,7 @@ const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 50;
 
 let isPanning = false;
+let mouseHasMoved = false;
 let startMouse = { x: 0, y: 0 };
 let startViewBox = { x: 0, y: 0 };
 
@@ -394,6 +395,7 @@ window.addEventListener("mouseup", () => {
 
 window.addEventListener("mousemove", e => {
     if (!isPanning) return;
+    mouseHasMoved = true;
 
     const mouse = getSvgMousePosition(e);
 
@@ -406,6 +408,10 @@ window.addEventListener("mousemove", e => {
 
 function addSvgEventListeners() {
     svg.addEventListener("click", e => {
+        if (mouseHasMoved) {
+            mouseHasMoved = false;
+            return;
+        }
         if (!e.target.matches(".interactivePath")) return;
         e.stopPropagation();
         mark(e.target);
@@ -413,6 +419,7 @@ function addSvgEventListeners() {
 
     svg.addEventListener("mousedown", e => {
         isPanning = true;
+        mouseHasMoved = false;
 
         const mouse = getSvgMousePosition(e);
 
