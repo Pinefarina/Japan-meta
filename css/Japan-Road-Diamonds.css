@@ -12,8 +12,8 @@ path:hover {
 }
 
 #svgContainer {
+    width: 100%;
     padding: 0;
-    overflow: hidden;
 }
 
 #layerContainer {
@@ -23,6 +23,7 @@ path:hover {
 }
 
 .questionInfo {
+    font-size: calc(1.25rem * 100cqw / 20rem);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -31,6 +32,7 @@ path:hover {
 }
 
 .diamond {
+    width: 100%;
     shape-rendering: auto;
     fill: white;
     opacity: 0;

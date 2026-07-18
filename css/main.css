@@ -99,7 +99,7 @@ path {
 }
 
 #continueButton {
-    line-height: 1;
+    line-height: 0.9;
     margin-top: auto;
     text-align: center;
     font-size: 2rem;
@@ -125,16 +125,17 @@ path {
 
 .container-top-left {
     position: absolute;
+    container-type: inline-size;
     top: 0.625rem;
     left: 0.625rem;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     pointer-events: none;
-    font-size: 1.25rem;
     text-align: center;
-    max-width: 30vw;
-    min-width: 20rem;
+    max-width: 30%;
+    width: 20rem;
+    min-width: 12rem;
 }
 
 #legendBox {
