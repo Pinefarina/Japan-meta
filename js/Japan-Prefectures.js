@@ -40,7 +40,7 @@ try {
 
     regions = [...svg.querySelectorAll("path[id]")];
 
-    COOLDOWN_TURNS = Math.round(regions.length / 2);
+    COOLDOWN_TURNS = Math.round(regions.length * 0.75);
 
     addSvgEventListeners();
     loadData();

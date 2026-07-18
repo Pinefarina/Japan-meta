@@ -329,7 +329,7 @@ function updateSlider() {
     marked.clear();
     Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
 
-    COOLDOWN_TURNS = Math.round(questions.filter(q => Number(String(q.id).padEnd(4, "0")) >= filterMin && Number(String(q.id).padEnd(4, "0")) <= filterMax).length / 2);
+    COOLDOWN_TURNS = Math.round(questions.filter(q => Number(String(q.id).padEnd(4, "0")) >= filterMin && Number(String(q.id).padEnd(4, "0")) <= filterMax).length * 0.75);
 
     const visualMin = Math.min(+slider1.value, +slider2.value);
     const visualMax = Math.max(+slider1.value, +slider2.value);

@@ -39,7 +39,7 @@ try {
 
     regions = [...svg.querySelectorAll("path[id]")];
 
-    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 8)) / 2);
+    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 8)) * 0.75);
 
     addSvgEventListeners();
     sortPaths();

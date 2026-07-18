@@ -59,7 +59,7 @@ try {
 
     regions = [...svg.querySelectorAll("path[id]")];
 
-    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 9)) / 2);
+    COOLDOWN_TURNS = Math.round(regions.filter(region => (region.id[0] == 9 && region.id[1] == 9)) * 0.75);
 
     addSvgEventListeners();
     sortPaths();
@@ -138,7 +138,7 @@ function updateSlider() {
 
     Object.keys(cooldowns).forEach(k => delete cooldowns[k]);
 
-    COOLDOWN_TURNS = Math.round(regions.filter(region => Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) >= filterMin && Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) <= filterMax).length / 2);
+    COOLDOWN_TURNS = Math.round(regions.filter(region => Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) >= filterMin && Number(String(Number(String(region.id).slice(2))).padEnd(4, "0")) <= filterMax).length * 0.75);
 
     const visualMin = Math.min(+slider1.value, +slider2.value);
     const visualMax = Math.max(+slider1.value, +slider2.value);

@@ -84,7 +84,7 @@ async function loadData() {
         q.correct = new Set(q.correct);
     });
 
-    COOLDOWN_TURNS = Math.round(questions.length / 2);
+    COOLDOWN_TURNS = Math.round(questions.length * 0.75);
 
 
     initializeCamera();
